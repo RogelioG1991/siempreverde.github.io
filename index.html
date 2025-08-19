@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Siempre Verde • Recuperando Áreas protegidas</title>
+  <meta name="description" content="Tienda en línea de arbolitos: frutales, ornamentales y nativos. Compra fácil, entrega local y asesoría básica de cuidado." />
+  <meta name="theme-color" content="#2e7d32" />
+  <meta property="og:title" content="Siempre Verde" />
+  <meta property="og:description" content="Compra arbolitos frutales, ornamentales y nativos." />
+  <meta property="og:type" content="website" />
+  <style>
+    :root{
+      --bg:#f7f8f7; --card:#ffffff; --ink:#1b1b1b; --muted:#6b7280; --brand:#2e7d32; --brand-2:#1b5e20; --accent:#a5d6a7; --ring:#93c5fd; --danger:#b91c1c;
+      --radius:16px; --shadow:0 10px 25px rgba(0,0,0,.07);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1100px,100%);padding:0 1rem;margin:0 auto}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid #e5e7eb}
+    .nav{display:flex;align-items:center;gap:.75rem;justify-content:space-between;padding:.75rem 0}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:white;font-weight:900}
+    .nav a{padding:.35rem .6rem;border-radius:10px}
+    .nav a:hover{background:#eef2ff}
+    .cart-btn{position:relative}
+    .badge{position:absolute;top:-6px;right:-6px;background:var(--brand);color:#fff;border-radius:999px;font-size:.7rem;padding:.1rem .4rem}
+
+    /* Hero */
+    .hero{padding:2.5rem 0 1.5rem}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:1.5rem}
+    .hero h1{font-size:clamp(1.6rem,3vw,2.4rem);margin:.25rem 0}
+    .hero p{color:var(--muted)}
+    .cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--brand);color:#fff;border:0;border-radius:12px;padding:.8rem 1rem;font-weight:700;box-shadow:var(--shadow);cursor:pointer}
+    .cta:hover{background:var(--brand-2)}
+
+    /* Toolbar */
+    .toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.75rem;margin:1rem 0}
+    .input,.select{display:flex;align-items:center;background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:.65rem .75rem;gap:.5rem}
+    .input input{border:0;outline:0;flex:1;background:transparent}
+    .select select{border:0;outline:0;flex:1;background:transparent}
+
+    /* Cards */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .card{background:var(--card);border:1px solid #e5e7eb;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .card .media{aspect-ratio:4/3;background:#ecfdf5;display:grid;place-items:center}
+    .tag{font-size:.75rem;background:#f1f5f9;border:1px solid #e2e8f0;color:#334155;border-radius:999px;padding:.25rem .5rem}
+    .price{font-size:1.1rem;font-weight:800}
+    .muted{color:var(--muted)}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+    .pad{padding:1rem}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:.6rem .8rem;cursor:pointer}
+    .btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+    .btn.primary:hover{background:var(--brand-2)}
+    .btn.danger{background:var(--danger);color:#fff;border-color:var(--danger)}
+
+    /* Cart */
+    .drawer{position:fixed;inset:auto 0 0 auto;width:min(420px,100%);max-height:100dvh;background:var(--card);border-left:1px solid #e5e7eb;box-shadow:var(--shadow);transform:translateX(110%);transition:transform .35s ease;display:flex;flex-direction:column}
+    .drawer.open{transform:translateX(0)}
+    .drawer header{position:sticky;top:0;background:var(--card)}
+    .cart-list{padding:1rem;display:flex;flex-direction:column;gap:.75rem;overflow:auto}
+    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:.75rem;align-items:center;border:1px solid #e5e7eb;border-radius:12px;padding:.5rem;background:#fff}
+    .cart-item img{width:64px;height:48px;object-fit:cover;border-radius:8px}
+    .totals{padding:1rem;border-top:1px solid #e5e7eb;display:grid;gap:.25rem}
+
+    /* Sections */
+    section{padding:2rem 0}
+    .faq details{background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:1rem}
+
+    /* Footer */
+    footer{background:#0b3010;color:#e8f5e9;margin-top:2rem}
+    footer .container{display:grid;gap:1rem;padding:1.5rem 1rem}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .toolbar{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .grid{grid-template-columns:1fr}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto}
+      .drawer{transition:none}
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Siempre Verde",
+    "url": "https://ejemplo.tld",
+    "logo": "https://ejemplo.tld/logo.png",
+    "sameAs": []
+  }
+  </script>
+</head>
+<body>
+  <header aria-label="Barra superior">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Inicio">
+        <div class="logo" aria-hidden="true">🌱</div>
+        <span>Siempre <span style="color:var(--brand)">Verde</span></span>
+      </a>
+      <nav aria-label="Principal" class="row">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#sobre">Sobre nosotros</a>
+        <a href="#Noticias">Noticias</a>
+        <a href="#contacto">Contacto</a>
+        <button class="btn cart-btn" id="openCart" aria-label="Abrir carrito" title="Carrito">
+          🧺 Carrito <span class="badge" id="cartCount">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="tag">Limpieza, vida y futuro verde para nuestras comunidades</span>
+          <h1>Comprometidos con el medio ambiente</h1>
+          <p>Seleccionados para climas de Mesoamérica. Paga contra entrega o transferencia. Pregunta por descuentos al por mayor.</p>
+          <p>
+            <a href="#catalogo" class="cta">Ver catálogo y comprar →</a>
+          </p>
+        </div>
+        <div aria-hidden="true">
+          <img src="C:\Users\rogei\Pictures\Logo siempre verde.jpeg" alt="Siempre Verde" style="border-radius:var(--radius);box-shadow:var(--shadow)">
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" aria-label="Información de la tienda">
+      <div class="container">
+        <h2>Sobre nosotros</h2>
+        <p class="muted">Somos una plataforma digital para la administración del medio ambiente a nivel comunitario, cuyo objetivo es sanear, recuperar y dar nueva vida a las áreas perjudicadas por la industrialización descontrolada. Este esquema fusiona el cuidado del entorno con un componente social y tecnológico, impulsando la creación de trabajos ecológicos y la colaboración de los habitantes de la zona.</p>
+        <div class="faq" style="display:grid;gap:.75rem;margin-top:1rem">
+          <details>
+            <summary>Nuestra Misión</summary>
+            <p>Recuperar y reverdecer las áreas degradadas por "empresas o servicios que afectan el medio ambiente ", devolviendo equilibrio ecológico y bienestar social.</p>
+          </details>
+          <details>
+            <summary>Nuestra Visión</summary>
+            <p>Convertirnos en un referente internacional en restauración ambiental digitalizada, conectando a gobiernos, empresas y ciudadanos en un mismo propósito verde.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogo" aria-label="Catálogo de productos">
+      <div class="container">
+        <div class="toolbar" role="region" aria-label="Herramientas de búsqueda y filtros">
+          <label class="input" aria-label="Buscar por nombre">
+            🔎 <input id="search" type="search" placeholder="Buscar arbolito (ej. mango, pino)" />
+          </label>
+          <label class="select" aria-label="Filtrar por categoría">
+            🌿
+            <select id="category">
+              <option value="">Todas las categorías</option>
+              <option value="frutal">Frutales</option>
+              <option value="ornamental">Ornamentales</option>
+              <option value="nativo">Nativos</option>
+            </select>
+          </label>
+          <label class="select" aria-label="Ordenar">
+            ↕️
+            <select id="sort">
+              <option value="relevancia">Ordenar por relevancia</option>
+              <option value="precio-asc">Precio: menor a mayor</option>
+              <option value="precio-desc">Precio: mayor a menor</option>
+              <option value="nombre">Nombre A→Z</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="productGrid" class="grid" role="list"></div>
+      </div>
+    </section>
+
+    <section id="Noticias" aria-label="Noticias destacadas">
+      <div class="container">
+        <h2>Noticias</h2>
+        <p class="muted">Noticias destacadas sobre nosotros </p>
+        <div class="faq" style="display:grid;gap:.75rem;margin-top:1rem">
+          <details>
+            <summary>Avance del proyecto</summary>
+            <p>Se completó la limpieza de 50 hectáreas en la zona boscosa cercana a la universidad Galileo.</p>
+          </details>
+          <details>
+            <summary>Desempeño Ambiental</summary>
+            <p>Más de 2,000 nuevos árboles plantados en alianza con la Universidad Galileo y los vecinos de la zona 10, 15 y 9.</p>
+          </details>
+          <details>
+            <summary>Alianzas y convenios</summary>
+            <p>Firma de convenio con la ONG GreenFuture para ampliar el reverdecimiento, lo cual fortalece los vinculos entre instituciones.</p>
+            <p>Convocatoria abierta para voluntarios en la jornada de siembra de Octubre en el area boscosa de la Universidad Galileo.</p>
+          </details>
+          <details>
+            <summary>Certificaciones ambientales</summary>
+            <p>El proyecto manejado por el Ing. Ixim Lopez y la Licenciada Barbara Gonzales recibe el certificado internacional de carbono neutro.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+   
+    <section id="contacto" aria-label="Formulario de contacto">
+      <div class="container">
+        <h2>Contacto</h2>
+        <form id="contactForm" class="grid" style="grid-template-columns:repeat(2,1fr);gap:.75rem;max-width:800px">
+          <input class="input" style="grid-column:span 1" name="nombre" placeholder="Tu nombre" required />
+          <input class="input" style="grid-column:span 1" type="email" name="email" placeholder="Correo" required />
+          <input class="input" style="grid-column:span 1" type="tel" name="telefono" placeholder="Teléfono" />
+          <input class="input" style="grid-column:1/-1" name="asunto" placeholder="Asunto (opcional)" />
+          <textarea class="input" style="grid-column:1/-1;min-height:120px" name="mensaje" placeholder="Cuéntanos qué buscas" required></textarea>
+          <button class="btn primary" type="submit">Enviar consulta</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <aside id="cartDrawer" class="drawer" aria-label="Carrito" aria-hidden="true" role="dialog">
+    <header class="row pad" style="justify-content:space-between">
+      <strong>Tu carrito</strong>
+      <button class="btn" id="closeCart" aria-label="Cerrar carrito">✖</button>
+    </header>
+    <div id="cartList" class="cart-list"></div>
+    <div class="totals">
+      <div class="row"><span class="muted">Subtotal</span><strong id="subtotal">Q0.00</strong></div>
+      <div class="row"><span class="muted">Envío (estimado)</span><span id="shipping">Q0.00</span></div>
+      <div class="row" style="border-top:1px dashed #e5e7eb;margin-top:.25rem;padding-top:.25rem"><span>Total</span><strong id="total">Q0.00</strong></div>
+      <button class="btn primary" id="checkout">Finalizar compra</button>
+      <small class="muted">* Simulación de carrito para demo. Integra tu pasarela de pago preferida.</small>
+    </div>
+  </aside>
+
+  <footer>
+    <div class="container">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <div class="brand"><div class="logo">🌱</div> Siempre Verde</div>
+          <div class="muted">© <span id="year"></span> Todos los derechos reservados</div>
+        </div>
+        <div class="muted">WhatsApp • Facebook • Instagram</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Datos de ejemplo =====
+    const PRODUCTS = [
+      {id:'p1', nombre:'Mango Tommy', categoria:'frutal', precio: 65, stock: 12, img:'https://images.unsplash.com/photo-1508747703725-719777637510?q=80&w=1200&auto=format&fit=crop'},
+      {id:'p2', nombre:'Limón Persa', categoria:'frutal', precio: 55, stock: 10, img:'https://images.unsplash.com/photo-1615486363871-7c55cf6f128c?q=80&w=1200&auto=format&fit=crop'},
+      {id:'p3', nombre:'Pino Caribe', categoria:'nativo', precio: 40, stock: 22, img:'https://images.unsplash.com/photo-1618888942682-0a4251e6feba?q=80&w=1200&auto=format&fit=crop'},
+      {id:'p4', nombre:'Jacaranda', categoria:'ornamental', precio: 75, stock: 8, img:'https://images.unsplash.com/photo-1598257006318-2077fedf74bd?q=80&w=1200&auto=format&fit=crop'},
+      {id:'p5', nombre:'Aguacate Hass', categoria:'frutal', precio: 95, stock: 6, img:'https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop'},
+      {id:'p6', nombre:'Cedro', categoria:'nativo', precio: 120, stock: 4, img:'https://images.unsplash.com/photo-1605325907325-9e7d8fd1d405?q=80&w=1200&auto=format&fit=crop'}
+    ];
+
+    // ===== Estado =====
+    let state = {
+      search: '',
+      category: '',
+      sort: 'relevancia',
+      cart: JSON.parse(localStorage.getItem('cart')||'[]')
+    };
+
+    // ===== Utilidades =====
+    const formatQ = v => `Q${v.toFixed(2)}`;
+
+    // ===== Render catálogo =====
+    const grid = document.getElementById('productGrid');
+    function renderProducts(){
+      let items = PRODUCTS.filter(p => p.nombre.toLowerCase().includes(state.search.toLowerCase()));
+      if(state.category) items = items.filter(p => p.categoria === state.category);
+      switch(state.sort){
+        case 'precio-asc': items.sort((a,b)=>a.precio-b.precio); break;
+        case 'precio-desc': items.sort((a,b)=>b.precio-a.precio); break;
+        case 'nombre': items.sort((a,b)=>a.nombre.localeCompare(b.nombre)); break;
+        default: /* relevancia no cambia el orden base */ break;
+      }
+      grid.innerHTML = items.map(p=>`
+        <article class="card" role="listitem" aria-label="${p.nombre}">
+          <div class="media"><img src="${p.img}" alt="${p.nombre}"></div>
+          <div class="pad" style="display:grid;gap:.5rem">
+            <div class="row"><strong>${p.nombre}</strong> <span class="tag">${p.categoria}</span></div>
+            <div class="row"><span class="price">${formatQ(p.precio)}</span><span class="muted">Stock: ${p.stock}</span></div>
+            <button class="btn primary" onclick="addToCart('${p.id}')">Agregar al carrito</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // ===== Carrito =====
+    const drawer = document.getElementById('cartDrawer');
+    const cartCount = document.getElementById('cartCount');
+    const cartList = document.getElementById('cartList');
+    const subtotalEl = document.getElementById('subtotal');
+    const shippingEl = document.getElementById('shipping');
+    const totalEl = document.getElementById('total');
+
+    function openCart(){drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false');}
+    function closeCart(){drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true');}
+    document.getElementById('openCart').addEventListener('click', openCart);
+    document.getElementById('closeCart').addEventListener('click', closeCart);
+
+    function addToCart(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      const existing = state.cart.find(x=>x.id===id);
+      if(existing){ existing.qty = Math.min(existing.qty+1, p.stock); }
+      else{ state.cart.push({id, qty:1}); }
+      persistCart();
+      renderCart();
+      cartPulse();
+    }
+
+    function removeFromCart(id){
+      state.cart = state.cart.filter(x=>x.id!==id);
+      persistCart();
+      renderCart();
+    }
+
+    function changeQty(id,delta){
+      const item = state.cart.find(x=>x.id===id);
+      if(!item) return;
+      const p = PRODUCTS.find(x=>x.id===id);
+      item.qty = Math.max(1, Math.min(p.stock, item.qty + delta));
+      persistCart();
+      renderCart();
+    }
+
+    function persistCart(){
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    }
+
+    function renderCart(){
+      const enriched = state.cart.map(ci=>({ ...ci, ...PRODUCTS.find(p=>p.id===ci.id) }));
+      const subtotal = enriched.reduce((s,i)=> s + i.precio * i.qty, 0);
+      const shipping = subtotal > 250 ? 0 : (subtotal>0 ? 25 : 0);
+      cartList.innerHTML = enriched.length ? enriched.map(i=>`
+        <div class="cart-item">
+          <img src="${i.img}" alt="${i.nombre}">
+          <div>
+            <div class="row"><strong>${i.nombre}</strong><span class="muted">${formatQ(i.precio)}</span></div>
+            <div class="row" style="gap:.4rem">
+              <button class="btn" onclick="changeQty('${i.id}',-1)">−</button>
+              <span aria-live="polite">${i.qty}</span>
+              <button class="btn" onclick="changeQty('${i.id}',1)">+</button>
+              <button class="btn danger" onclick="removeFromCart('${i.id}')">Eliminar</button>
+            </div>
+          </div>
+          <div><strong>${formatQ(i.precio*i.qty)}</strong></div>
+        </div>
+      `).join('') : '<p class="muted">Tu carrito está vacío.</p>';
+      cartCount.textContent = enriched.reduce((s,i)=>s+i.qty,0);
+      subtotalEl.textContent = formatQ(subtotal);
+      shippingEl.textContent = formatQ(shipping);
+      totalEl.textContent = formatQ(subtotal+shipping);
+    }
+
+    // ===== Búsqueda / filtros =====
+    document.getElementById('search').addEventListener('input', e=>{state.search=e.target.value; renderProducts();});
+    document.getElementById('category').addEventListener('change', e=>{state.category=e.target.value; renderProducts();});
+    document.getElementById('sort').addEventListener('change', e=>{state.sort=e.target.value; renderProducts();});
+
+    // ===== Checkout (demo) =====
+    document.getElementById('checkout').addEventListener('click', ()=>{
+      alert('Demo: aquí conectarías tu pasarela de pago o WhatsApp.');
+    });
+
+    // ===== Contacto (demo) =====
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      console.log('Consulta enviada', data);
+      alert('¡Gracias! Te responderemos pronto.');
+      e.target.reset();
+    });
+
+    // ===== Extras =====
+    function cartPulse(){
+      const b = document.getElementById('openCart');
+      b.animate([{transform:'scale(1)'},{transform:'scale(1.05)'},{transform:'scale(1)'}],{duration:400});
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Inicializar
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
