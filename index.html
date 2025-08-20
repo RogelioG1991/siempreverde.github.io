@@ -59,15 +59,6 @@
     .btn.primary:hover{background:var(--brand-2)}
     .btn.danger{background:var(--danger);color:#fff;border-color:var(--danger)}
 
-    /* Cart */
-    .drawer{position:fixed;inset:auto 0 0 auto;width:min(420px,100%);max-height:100dvh;background:var(--card);border-left:1px solid #e5e7eb;box-shadow:var(--shadow);transform:translateX(110%);transition:transform .35s ease;display:flex;flex-direction:column}
-    .drawer.open{transform:translateX(0)}
-    .drawer header{position:sticky;top:0;background:var(--card)}
-    .cart-list{padding:1rem;display:flex;flex-direction:column;gap:.75rem;overflow:auto}
-    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:.75rem;align-items:center;border:1px solid #e5e7eb;border-radius:12px;padding:.5rem;background:#fff}
-    .cart-item img{width:64px;height:48px;object-fit:cover;border-radius:8px}
-    .totals{padding:1rem;border-top:1px solid #e5e7eb;display:grid;gap:.25rem}
-
     /* Sections */
     section{padding:2rem 0}
     .faq details{background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:1rem}
@@ -109,13 +100,10 @@
         <span>Siempre <span style="color:var(--brand)">Verde</span></span>
       </a>
       <nav aria-label="Principal" class="row">
-        <a href="#catalogo">Catálogo</a>
+        <a href="#video-arbolitos">Video guía</a>
         <a href="#sobre">Sobre nosotros</a>
         <a href="#Noticias">Noticias</a>
         <a href="#contacto">Contacto</a>
-        <button class="btn cart-btn" id="openCart" aria-label="Abrir carrito" title="Carrito">
-          🧺 Carrito <span class="badge" id="cartCount">0</span>
-        </button>
       </nav>
     </div>
   </header>
@@ -156,15 +144,17 @@
 
 <section id="video-arbolitos" aria-label="Video de arbolitos">
   <div class="container">
-    <iframe
-      width="100%"
-      height="500"
-      src="https://www.youtube.com/embed/VzDfBsK8-go?rel=0"
-      title="Video de arbolitos"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+    <h2>Video guía</h2>
+    <div class="video-container" style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
+      <iframe
+        src="https://www.youtube.com/embed/VzDfBsK8-go?rel=0"
+        title="Video de arbolitos"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute; top:0; left:0; width:100%; height:100%;">
+      </iframe>
+    </div>
   </div>
 </section>
 
@@ -209,21 +199,6 @@
     </section>
   </main>
 
-  <aside id="cartDrawer" class="drawer" aria-label="Carrito" aria-hidden="true" role="dialog">
-    <header class="row pad" style="justify-content:space-between">
-      <strong>Tu carrito</strong>
-      <button class="btn" id="closeCart" aria-label="Cerrar carrito">✖</button>
-    </header>
-    <div id="cartList" class="cart-list"></div>
-    <div class="totals">
-      <div class="row"><span class="muted">Subtotal</span><strong id="subtotal">Q0.00</strong></div>
-      <div class="row"><span class="muted">Envío (estimado)</span><span id="shipping">Q0.00</span></div>
-      <div class="row" style="border-top:1px dashed #e5e7eb;margin-top:.25rem;padding-top:.25rem"><span>Total</span><strong id="total">Q0.00</strong></div>
-      <button class="btn primary" id="checkout">Finalizar compra</button>
-      <small class="muted">* Simulación de carrito para demo. Integra tu pasarela de pago preferida.</small>
-    </div>
-  </aside>
-
   <footer>
     <div class="container">
       <div class="row" style="justify-content:space-between">
@@ -237,116 +212,6 @@
   </footer>
 
   <script>
-    // ===== Datos de ejemplo =====
-    const PRODUCTS = [
-      {id:'p1', nombre:'Mango Tommy', categoria:'frutal', precio: 65, stock: 12, img:'https://images.unsplash.com/photo-1508747703725-719777637510?q=80&w=1200&auto=format&fit=crop'},
-      {id:'p2', nombre:'Limón Persa', categoria:'frutal', precio: 55, stock: 10, img:'https://images.unsplash.com/photo-1615486363871-7c55cf6f128c?q=80&w=1200&auto=format&fit=crop'},
-      {id:'p3', nombre:'Pino Caribe', categoria:'nativo', precio: 40, stock: 22, img:'https://images.unsplash.com/photo-1618888942682-0a4251e6feba?q=80&w=1200&auto=format&fit=crop'},
-      {id:'p4', nombre:'Jacaranda', categoria:'ornamental', precio: 75, stock: 8, img:'https://images.unsplash.com/photo-1598257006318-2077fedf74bd?q=80&w=1200&auto=format&fit=crop'},
-      {id:'p5', nombre:'Aguacate Hass', categoria:'frutal', precio: 95, stock: 6, img:'https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop'},
-      {id:'p6', nombre:'Cedro', categoria:'nativo', precio: 120, stock: 4, img:'https://images.unsplash.com/photo-1605325907325-9e7d8fd1d405?q=80&w=1200&auto=format&fit=crop'}
-    ];
-
-    // ===== Estado =====
-    let state = {
-      search: '',
-      category: '',
-      sort: 'relevancia',
-      cart: JSON.parse(localStorage.getItem('cart')||'[]')
-    };
-
-    // ===== Utilidades =====
-    const formatQ = v => `Q${v.toFixed(2)}`;
-
-    // ===== Render catálogo =====
-    const grid = document.getElementById('productGrid');
-    function renderProducts(){
-      let items = PRODUCTS.filter(p => p.nombre.toLowerCase().includes(state.search.toLowerCase()));
-      if(state.category) items = items.filter(p => p.categoria === state.category);
-      switch(state.sort){
-        case 'precio-asc': items.sort((a,b)=>a.precio-b.precio); break;
-        case 'precio-desc': items.sort((a,b)=>b.precio-a.precio); break;
-        case 'nombre': items.sort((a,b)=>a.nombre.localeCompare(b.nombre)); break;
-        default: /* relevancia no cambia el orden base */ break;
-      }
-      grid.innerHTML = items.map(p=>`
-        <article class="card" role="listitem" aria-label="${p.nombre}">
-          <div class="media"><img src="${p.img}" alt="${p.nombre}"></div>
-          <div class="pad" style="display:grid;gap:.5rem">
-            <div class="row"><strong>${p.nombre}</strong> <span class="tag">${p.categoria}</span></div>
-            <div class="row"><span class="price">${formatQ(p.precio)}</span><span class="muted">Stock: ${p.stock}</span></div>
-            <button class="btn primary" onclick="addToCart('${p.id}')">Agregar al carrito</button>
-          </div>
-        </article>
-      `).join('');
-    }
-
-    // ===== Carrito =====
-    const drawer = document.getElementById('cartDrawer');
-    const cartCount = document.getElementById('cartCount');
-    const cartList = document.getElementById('cartList');
-    const subtotalEl = document.getElementById('subtotal');
-    const shippingEl = document.getElementById('shipping');
-    const totalEl = document.getElementById('total');
-
-    function openCart(){drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false');}
-    function closeCart(){drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true');}
-    document.getElementById('openCart').addEventListener('click', openCart);
-    document.getElementById('closeCart').addEventListener('click', closeCart);
-
-    function addToCart(id){
-      const p = PRODUCTS.find(x=>x.id===id);
-      const existing = state.cart.find(x=>x.id===id);
-      if(existing){ existing.qty = Math.min(existing.qty+1, p.stock); }
-      else{ state.cart.push({id, qty:1}); }
-      persistCart();
-      renderCart();
-      cartPulse();
-    }
-
-    function removeFromCart(id){
-      state.cart = state.cart.filter(x=>x.id!==id);
-      persistCart();
-      renderCart();
-    }
-
-    function changeQty(id,delta){
-      const item = state.cart.find(x=>x.id===id);
-      if(!item) return;
-      const p = PRODUCTS.find(x=>x.id===id);
-      item.qty = Math.max(1, Math.min(p.stock, item.qty + delta));
-      persistCart();
-      renderCart();
-    }
-
-    function persistCart(){
-      localStorage.setItem('cart', JSON.stringify(state.cart));
-    }
-
-    function renderCart(){
-      const enriched = state.cart.map(ci=>({ ...ci, ...PRODUCTS.find(p=>p.id===ci.id) }));
-      const subtotal = enriched.reduce((s,i)=> s + i.precio * i.qty, 0);
-      const shipping = subtotal > 250 ? 0 : (subtotal>0 ? 25 : 0);
-      cartList.innerHTML = enriched.length ? enriched.map(i=>`
-        <div class="cart-item">
-          <img src="${i.img}" alt="${i.nombre}">
-          <div>
-            <div class="row"><strong>${i.nombre}</strong><span class="muted">${formatQ(i.precio)}</span></div>
-            <div class="row" style="gap:.4rem">
-              <button class="btn" onclick="changeQty('${i.id}',-1)">−</button>
-              <span aria-live="polite">${i.qty}</span>
-              <button class="btn" onclick="changeQty('${i.id}',1)">+</button>
-              <button class="btn danger" onclick="removeFromCart('${i.id}')">Eliminar</button>
-            </div>
-          </div>
-          <div><strong>${formatQ(i.precio*i.qty)}</strong></div>
-        </div>
-      `).join('') : '<p class="muted">Tu carrito está vacío.</p>';
-      cartCount.textContent = enriched.reduce((s,i)=>s+i.qty,0);
-      subtotalEl.textContent = formatQ(subtotal);
-      shippingEl.textContent = formatQ(shipping);
-      totalEl.textContent = formatQ(subtotal+shipping);
-    }
 
     // ===== Búsqueda / filtros =====
     document.getElementById('search').addEventListener('input', e=>{state.search=e.target.value; renderProducts();});
@@ -366,21 +231,11 @@
       alert('¡Gracias! Te responderemos pronto.');
       e.target.reset();
     });
-
-    // ===== Extras =====
-    function cartPulse(){
-      const b = document.getElementById('openCart');
-      b.animate([{transform:'scale(1)'},{transform:'scale(1.05)'},{transform:'scale(1)'}],{duration:400});
-    }
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Inicializar
-    renderProducts();
-    renderCart();
   </script>
 </body>
 
 </html>
+
 
 
 
