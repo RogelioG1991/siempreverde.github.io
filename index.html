@@ -23,6 +23,7 @@
       max-width: 800px;
       margin: 40px auto;
       position: relative;
+      padding: 0 10px;
     }
 
     .video-wrapper {
@@ -43,15 +44,17 @@
       border: none;
     }
 
-    /* Bloqueador de clics */
-    .no-click-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      background: transparent;
+    /* Capa que bloquea clics solo en pantallas grandes */
+    @media (min-width: 769px) {
+      .no-click-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background: transparent;
+      }
     }
 
     .footer {
@@ -70,14 +73,13 @@
   <div class="container">
     <h2>Partido en Vivo</h2>
     <div class="video-wrapper">
-      <div class="no-click-layer"></div> <!-- Capa que bloquea los clics -->
+      <div class="no-click-layer"></div> <!-- Esta capa solo se aplica en escritorio -->
 
-      <!-- Aquí insertas TU LINK de video embebido -->
+      <!-- Inserta tu video embebido aquí -->
       <iframe 
         src="https://streamvv11.lat/global1.php?channel=espn"
         allow="autoplay; encrypted-media"
-        allowfullscreen
-        sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation">
+        allowfullscreen>
       </iframe>
     </div>
   </div>
