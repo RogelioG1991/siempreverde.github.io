@@ -1,201 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Siempre Verde • Recuperando Áreas protegidas</title>
-  <meta name="description" content="Tienda en línea de arbolitos: frutales, ornamentales y nativos. Compra fácil, entrega local y asesoría básica de cuidado." />
-  <meta name="theme-color" content="#2e7d32" />
-  <meta property="og:title" content="Siempre Verde" />
-  <meta property="og:description" content="Compra arbolitos frutales, ornamentales y nativos." />
-  <meta property="og:type" content="website" />
-  <style>
-    :root{
-      --bg:#f7f8f7; --card:#ffffff; --ink:#1b1b1b; --muted:#6b7280; --brand:#2e7d32; --brand-2:#1b5e20; --accent:#a5d6a7; --ring:#93c5fd; --danger:#b91c1c;
-      --radius:16px; --shadow:0 10px 25px rgba(0,0,0,.07);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--ink);background:var(--bg)}
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{width:min(1100px,100%);padding:0 1rem;margin:0 auto}
-
-    /* Header */
-    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid #e5e7eb}
-    .nav{display:flex;align-items:center;gap:.75rem;justify-content:space-between;padding:.75rem 0}
-    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800}
-    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:white;font-weight:900}
-    .nav a{padding:.35rem .6rem;border-radius:10px}
-    .nav a:hover{background:#eef2ff}
-    .cart-btn{position:relative}
-    .badge{position:absolute;top:-6px;right:-6px;background:var(--brand);color:#fff;border-radius:999px;font-size:.7rem;padding:.1rem .4rem}
-
-    /* Hero */
-    .hero{padding:2.5rem 0 1.5rem}
-    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:1.5rem}
-    .hero h1{font-size:clamp(1.6rem,3vw,2.4rem);margin:.25rem 0}
-    .hero p{color:var(--muted)}
-    .cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--brand);color:#fff;border:0;border-radius:12px;padding:.8rem 1rem;font-weight:700;box-shadow:var(--shadow);cursor:pointer}
-    .cta:hover{background:var(--brand-2)}
-
-    /* Toolbar */
-    .toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.75rem;margin:1rem 0}
-    .input,.select{display:flex;align-items:center;background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:.65rem .75rem;gap:.5rem}
-    .input input{border:0;outline:0;flex:1;background:transparent}
-    .select select{border:0;outline:0;flex:1;background:transparent}
-
-    /* Cards */
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    .card{background:var(--card);border:1px solid #e5e7eb;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
-    .card .media{aspect-ratio:4/3;background:#ecfdf5;display:grid;place-items:center}
-    .tag{font-size:.75rem;background:#f1f5f9;border:1px solid #e2e8f0;color:#334155;border-radius:999px;padding:.25rem .5rem}
-    .price{font-size:1.1rem;font-weight:800}
-    .muted{color:var(--muted)}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-    .pad{padding:1rem}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:.6rem .8rem;cursor:pointer}
-    .btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .btn.primary:hover{background:var(--brand-2)}
-    .btn.danger{background:var(--danger);color:#fff;border-color:var(--danger)}
-
-    /* Sections */
-    section{padding:2rem 0}
-    .faq details{background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:1rem}
-
-    /* Footer */
-    footer{background:#0b3010;color:#e8f5e9;margin-top:2rem}
-    footer .container{display:grid;gap:1rem;padding:1.5rem 1rem}
-
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero-grid{grid-template-columns:1fr}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .toolbar{grid-template-columns:1fr}
-    }
-    @media (max-width:600px){
-      .grid{grid-template-columns:1fr}
-    }
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto}
-      .drawer{transition:none}
-    }
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Siempre Verde",
-    "url": "https://ejemplo.tld",
-    "logo": "https://ejemplo.tld/logo.png",
-    "sameAs": []
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black; /* Fondo negro para áreas fuera del video */
+        }
+        #dynamicIframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
-  <header aria-label="Barra superior">
-    <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="Inicio">
-        <div class="logo" aria-hidden="true">🌱</div>
-        <span>Siempre <span style="color:var(--brand)">Verde</span></span>
-      </a>
-      <nav aria-label="Principal" class="row">
-        <a href="#sobre">Sobre nosotros</a>
-      </nav>
-    </div>
-  </header>
 
- <main id="inicio">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="tag">Limpieza, vida y futuro verde para nuestras comunidades</span>
-          hola padree</h1>
-          <p>Por un planeta mas verde</p>
-          <div class="image-container">
-            <img src="collage2.jpg" alt="Imagen adicional" style="border-radius:var(--radius);box-shadow:var(--shadow);max-width:85%;">
-          </div>
-        </div>
-        <div aria-hidden="true">
-          <img src="logo.jpeg" style="border-radius:var(--radius);box-shadow:var(--shadow)">
-        </div>
-      </div>
-    </section>
-</main>
+<div id="player">
+    <iframe id="dynamicIframe"
+            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" 
+            frameborder="0" 
+            scrolling="no"
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+    </iframe>
+</div>
 
-    
+<script>
+// Función para obtener parámetros de la URL
+function getParameterByName(name) {
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(window.location.href);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
-  <footer>
-    <div class="container">
-      <div class="row" style="justify-content:space-between">
-        <div>
-          <div class="brand"><div class="logo">🌱</div> Siempre Verde</div>
-          <div class="muted">© <span id="year"></span> Todos los derechos reservados</div>
-        </div>
-        <div class="muted">WhatsApp • Facebook • Instagram</div>
-      </div>
-    </div>
-  </footer>
+// Usando la función para obtener el valor del parámetro 'get'
+var iframeSrc = getParameterByName('get');
 
-  <script>
+// Estableciendo el src del iframe si el parámetro 'get' existe
+if(iframeSrc) {
+    document.getElementById('dynamicIframe').src = iframeSrc;
+}
+</script>
 
-    // ===== Búsqueda / filtros =====
-    document.getElementById('search').addEventListener('input', e=>{state.search=e.target.value; renderProducts();});
-    document.getElementById('category').addEventListener('change', e=>{state.category=e.target.value; renderProducts();});
-    document.getElementById('sort').addEventListener('change', e=>{state.sort=e.target.value; renderProducts();});
-
-    // ===== Checkout (demo) =====
-    document.getElementById('checkout').addEventListener('click', ()=>{
-      alert('Demo: aquí conectarías tu pasarela de pago o WhatsApp.');
-    });
-
-    // ===== Contacto (demo) =====
-    document.getElementById('contactForm').addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target));
-      console.log('Consulta enviada', data);
-      alert('¡Gracias! Te responderemos pronto.');
-      e.target.reset();
-    });
-  </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
