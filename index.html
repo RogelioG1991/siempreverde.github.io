@@ -1,63 +1,93 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor de Video</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        #player {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black; /* Fondo negro para áreas fuera del video */
-        }
-        #dynamicIframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roger Deportes GT</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      text-align: center;
+    }
+
+    header {
+      background-color: #0b3d91;
+      color: white;
+      padding: 20px 0;
+      font-size: 2em;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      position: relative;
+      padding: 0 10px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* Proporción 16:9 */
+      background: black;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Capa que bloquea clics solo en pantallas grandes */
+    @media (min-width: 769px) {
+      .no-click-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background: transparent;
+      }
+    }
+
+    .footer {
+      margin-top: 40px;
+      color: #666;
+      font-size: 0.9em;
+    }
+  </style>
 </head>
 <body>
 
-<div id="player">
-    <iframe id="dynamicIframe"
-            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" 
-            frameborder="0" 
-            scrolling="no"
-            allow="autoplay; encrypted-media" 
-            allowfullscreen>
-    </iframe>
-</div>
+  <header>
+    Roger Deportes GT ⚽
+  </header>
 
-<script>
-// Función para obtener parámetros de la URL
-function getParameterByName(name) {
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(window.location.href);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+  <div class="container">
+    <h2>Partido en Vivo</h2>
+    <div class="video-wrapper">
+      <div class="no-click-layer"></div> <!-- Esta capa solo se aplica en escritorio -->
 
-// Usando la función para obtener el valor del parámetro 'get'
-var iframeSrc = getParameterByName('get');
+      <!-- Inserta tu video embebido aquí -->
+      <iframe 
+        src="https://golazotvhd.com/evento.html?get=https%3A%2F%2Fvoodc.com%2Fembed%2F85818c91a487a18a847a8599a2889887877f.html"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
 
-// Estableciendo el src del iframe si el parámetro 'get' existe
-if(iframeSrc) {
-    document.getElementById('dynamicIframe').src = iframeSrc;
-}
-</script>
+  <div class="footer">
+    © 2025 Roger Deportes GT - Todos los derechos reservados.
+  </div>
 
 </body>
 </html>
