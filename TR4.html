@@ -1,9 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Roger Deportes GT</title>
+
+  <!-- 🔹 Icono de la pestaña -->
+  <link rel="icon" type="image/jpeg" href="rogerd.jpeg">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,15 +21,55 @@
     header {
       background-color: #0b3d91;
       color: white;
-      padding: 20px 0;
+      padding: 20px;
       font-size: 2em;
       font-weight: bold;
     }
 
+    /* 🔹 Contenido del encabezado con logo y enlace de retorno */
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      margin-right: 15px;
+    }
+
+    .titulo {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+    }
+
+    .volver-inicio {
+      font-size: 0.6em;
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
+
+    .volver-inicio:hover {
+      text-decoration: underline;
+      color: #cdd8f5;
+    }
+
+    /* 🔹 Caja principal */
     .container {
       margin: 40px auto;
       max-width: 800px;
       padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     iframe {
@@ -38,30 +83,39 @@
       margin-top: 40px;
       color: #666;
       font-size: 0.9em;
+      padding-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
+  <!-- 🔹 Encabezado con logo y botón de regreso -->
   <header>
-    Roger Deportes GT ⚽
+    <div class="header-content">
+      <div class="titulo">
+        <img src="rogerd.jpeg" alt="Logo Roger Deportes GT">
+        Roger Deportes GT ⚽
+      </div>
+      <a href="main.html" class="volver-inicio">Volver a inicio</a>
+    </div>
   </header>
 
+  <!-- 🔹 Contenedor principal -->
   <div class="container">
     <h2>SUPERBOWL</h2>
-     
+
     <!-- Aquí puedes insertar un enlace de YouTube u otra plataforma -->
-    <iframe 
-      src="link"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe
+      src="https://www.youtube.com/embed/nCltNgtcoak"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen>
     </iframe>
   </div>
- 
+
+  <!-- 🔹 Pie de página -->
   <div class="footer">
-    © 2025 Roger Deportes GT no es dueño del contenido, solamente redirigimos para que puedas disfrutar.
+    © 2025 Roger Deportes GT no es dueño del contenido y no monetiza, solamente filtramos links del internet y los compartimos para los amantes del deporte.
   </div>
 
 </body>
 </html>
-
