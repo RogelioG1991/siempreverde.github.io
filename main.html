@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Roger Deportes GT</title>
+  
+  <!-- 🔹 Icono de la pestaña -->
+  <link rel="icon" type="image/jpeg" href="rogerd.jpeg">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -82,9 +86,9 @@
 
           // Buscar el h2 dentro de .container
           const h2 = doc.querySelector('.container h2');
-          const texto = h2 ? h2.innerText : archivo; // fallback
+          const texto = h2 ? h2.innerText : archivo; // fallback si no hay h2
 
-          // Crear enlace
+          // Crear enlace dinámico
           const link = document.createElement('a');
           link.href = archivo;
           link.textContent = texto;
