@@ -71,7 +71,10 @@
     const contenedor = document.getElementById('transmisiones');
 
     archivos.forEach(archivo => {
-      fetch(archivo)
+      // Cache-busting: agrega un parámetro único para forzar la recarga
+      const url = archivo + '?v=' + new Date().getTime();
+
+      fetch(url)
         .then(response => response.text())
         .then(data => {
           const parser = new DOMParser();
@@ -79,7 +82,7 @@
 
           // Buscar el h2 dentro de .container
           const h2 = doc.querySelector('.container h2');
-          const texto = h2 ? h2.innerText : archivo; // fallback: nombre archivo
+          const texto = h2 ? h2.innerText : archivo; // fallback
 
           // Crear enlace
           const link = document.createElement('a');
