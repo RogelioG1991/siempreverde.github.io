@@ -84,7 +84,7 @@
   </div>
 
   <script>
-    // 🔹 Lista extendida a 10 transmisiones
+    // 🔹 Lista de transmisiones en orden fijo
     const archivos = [
       'TR1.html', 'TR2.html', 'TR3.html', 'TR4.html', 'TR5.html',
       'TR6.html', 'TR7.html', 'TR8.html', 'TR9.html', 'TR10.html'
@@ -92,35 +92,38 @@
 
     const contenedor = document.getElementById('transmisiones');
 
-    archivos.forEach(archivo => {
-      // Cache-busting para evitar contenido viejo en navegador
-      const url = archivo + '?v=' + new Date().getTime();
+    // 🔹 Función asíncrona para garantizar orden 1→10
+    async function cargarTransmisiones() {
+      for (let archivo of archivos) {
+        const url = archivo + '?v=' + new Date().getTime();
 
-      fetch(url)
-        .then(response => response.text())
-        .then(data => {
+        try {
+          const response = await fetch(url);
+          const data = await response.text();
+
           const parser = new DOMParser();
           const doc = parser.parseFromString(data, 'text/html');
 
-          // Buscar el título de la transmisión
           const h2 = doc.querySelector('.container h2');
           const texto = h2 ? h2.innerText : archivo;
 
-          // Crear enlace dinámico
           const link = document.createElement('a');
           link.href = archivo;
           link.textContent = texto;
 
           contenedor.appendChild(link);
-        })
-        .catch(err => {
+        } catch (err) {
           console.error(`Error cargando ${archivo}:`, err);
           const link = document.createElement('a');
           link.href = archivo;
           link.textContent = `Error con ${archivo}`;
           contenedor.appendChild(link);
-        });
-    });
+        }
+      }
+    }
+
+    // Ejecutar la carga en orden
+    cargarTransmisiones();
   </script>
 
 </body>
