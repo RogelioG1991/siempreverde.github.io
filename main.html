@@ -26,7 +26,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px; /* separación entre imagen y texto */
+      gap: 15px;
     }
 
     header img {
@@ -47,22 +47,23 @@
     }
 
     .transmisiones a {
-      display: block; 
-      font-size: 1.5em;
+      display: block;
+      font-size: 1.4em;
       color: #0b3d91;
       text-decoration: none;
-      margin: 10px 0; 
+      margin: 12px 0;
       transition: color 0.3s;
     }
 
     .transmisiones a:hover {
-      color: #062a6f; 
+      color: #062a6f;
     }
 
     .footer {
       margin-top: 40px;
       color: #666;
       font-size: 0.9em;
+      padding-bottom: 20px;
     }
   </style>
 </head>
@@ -83,12 +84,16 @@
   </div>
 
   <script>
-    // Lista de archivos TRx.html
-    const archivos = ['TR1.html', 'TR2.html', 'TR3.html', 'TR4.html', 'TR5.html', 'TR6.html'];
+    // 🔹 Lista extendida a 10 transmisiones
+    const archivos = [
+      'TR1.html', 'TR2.html', 'TR3.html', 'TR4.html', 'TR5.html',
+      'TR6.html', 'TR7.html', 'TR8.html', 'TR9.html', 'TR10.html'
+    ];
+
     const contenedor = document.getElementById('transmisiones');
 
     archivos.forEach(archivo => {
-      // Cache-busting: agrega un parámetro único para forzar la recarga
+      // Cache-busting para evitar contenido viejo en navegador
       const url = archivo + '?v=' + new Date().getTime();
 
       fetch(url)
@@ -97,9 +102,9 @@
           const parser = new DOMParser();
           const doc = parser.parseFromString(data, 'text/html');
 
-          // Buscar el h2 dentro de .container
+          // Buscar el título de la transmisión
           const h2 = doc.querySelector('.container h2');
-          const texto = h2 ? h2.innerText : archivo; // fallback si no hay h2
+          const texto = h2 ? h2.innerText : archivo;
 
           // Crear enlace dinámico
           const link = document.createElement('a');
@@ -120,7 +125,3 @@
 
 </body>
 </html>
-
-
-
-
