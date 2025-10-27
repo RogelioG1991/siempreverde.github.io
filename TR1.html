@@ -16,9 +16,34 @@
     header {
       background-color: #0b3d91;
       color: white;
-      padding: 20px 0;
+      padding: 20px;
       font-size: 2em;
       font-weight: bold;
+    }
+
+    /* Nueva estructura del header */
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .titulo {
+      font-size: 1em;
+    }
+
+    .volver-inicio {
+      font-size: 0.6em;
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
+
+    .volver-inicio:hover {
+      text-decoration: underline;
+      color: #cdd8f5;
     }
 
     .container {
@@ -44,7 +69,10 @@
 <body>
 
   <header>
-    Roger Deportes GT ⚽
+    <div class="header-content">
+      <span class="titulo">Roger Deportes GT ⚽</span>
+      <a href="index.html" class="volver-inicio">Volver a inicio</a>
+    </div>
   </header>
 
   <div class="container">
@@ -64,6 +92,3 @@
 
 </body>
 </html>
-
-
-
