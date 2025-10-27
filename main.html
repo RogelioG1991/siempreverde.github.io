@@ -31,16 +31,16 @@
     }
 
     .transmisiones a {
-      display: block; /* Cada enlace en su propia línea */
+      display: block; 
       font-size: 1.5em;
       color: #0b3d91;
       text-decoration: none;
-      margin: 10px 0; /* Espacio entre transmisiones */
+      margin: 10px 0; 
       transition: color 0.3s;
     }
 
     .transmisiones a:hover {
-      color: #062a6f; /* Cambio de color al pasar el mouse */
+      color: #062a6f; 
     }
 
     .footer {
@@ -58,19 +58,45 @@
 
   <div class="container">
     <h2>Transmisiones en vivo</h2>
-    <div class="transmisiones">
-      <a href="TR1.html">TRANSMISION 1</a>
-      <a href="TR1.html">TRANSMISION 2</a>
-      <a href="TR1.html">TRANSMISION 3</a>
-      <a href="TR1.html">TRANSMISION 4</a>
-      <a href="TR1.html">TRANSMISION 5</a>
-      <a href="TR1.html">TRANSMISION 6</a>
-    </div>
+    <div class="transmisiones" id="transmisiones"></div>
   </div>
 
   <div class="footer">
     © 2025 Roger Deportes GT no es dueño del contenido, solamente redirigimos para que puedas disfrutar.
   </div>
+
+  <script>
+    // Lista de archivos TRx.html
+    const archivos = ['TR1.html', 'TR2.html', 'TR3.html', 'TR4.html', 'TR5.html', 'TR6.html'];
+    const contenedor = document.getElementById('transmisiones');
+
+    archivos.forEach(archivo => {
+      fetch(archivo)
+        .then(response => response.text())
+        .then(data => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data, 'text/html');
+
+          // Buscar el h2 dentro de .container
+          const h2 = doc.querySelector('.container h2');
+          const texto = h2 ? h2.innerText : archivo; // fallback: nombre archivo
+
+          // Crear enlace
+          const link = document.createElement('a');
+          link.href = archivo;
+          link.textContent = texto;
+
+          contenedor.appendChild(link);
+        })
+        .catch(err => {
+          console.error(`Error cargando ${archivo}:`, err);
+          const link = document.createElement('a');
+          link.href = archivo;
+          link.textContent = `Error con ${archivo}`;
+          contenedor.appendChild(link);
+        });
+    });
+  </script>
 
 </body>
 </html>
