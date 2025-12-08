@@ -2,14 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Boda JyR</title>
+  <title>Portal de Redirección</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm">
-    <h1 class="text-xl font-semibold mb-4 text-center">Ingresa el código de tu invitación</h1>
+<body 
+  class="min-h-screen flex items-center justify-center"
+  style="
+    background-image: url('fondobodalogin.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  "
+>
+  <div class="bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg w-full max-w-sm backdrop-blur-sm">
+    <h1 class="text-xl font-semibold mb-4 text-center">Portal Siempreverde</h1>
 
     <input
       id="texto"
@@ -30,7 +38,7 @@
   </div>
 
   <script>
-    // ✅ LISTADO PREDEFINIDO DE CÓDIGOS VÁLIDOS (EN MAYÚSCULAS)
+    // LISTADO PREDEFINIDO DE CÓDIGOS VÁLIDOS (EN MAYÚSCULAS)
     const codigosValidos = [
       "TR1",
       "TR2",
@@ -43,7 +51,7 @@
       const input = document.getElementById("texto");
       const mensaje = document.getElementById("mensaje");
 
-      // Convertir siempre a mayúsculas
+      // Convertimos siempre a MAYÚSCULAS
       const texto = input.value.trim().toUpperCase();
 
       if (!texto) {
@@ -52,7 +60,7 @@
         return;
       }
 
-      // ❌ VALIDACIÓN (insensible a mayúsc/minúsc -> gracias al toUpperCase)
+      // VALIDACIÓN CONTRA EL LISTADO
       if (!codigosValidos.includes(texto)) {
         mensaje.textContent = "El código no existe. Intenta de nuevo.";
         mensaje.className = "text-sm mt-3 text-center text-red-600";
@@ -61,7 +69,7 @@
         return;
       }
 
-      // ✅ SI EL CÓDIGO ES VÁLIDO
+      // REDIRECCIÓN SI EL CÓDIGO ES VÁLIDO
       const url = `https://www.siempreverde.site/${texto}`;
       mensaje.textContent = "Código válido. Redirigiendo...";
       mensaje.className = "text-sm mt-3 text-center text-green-600";
@@ -71,6 +79,6 @@
       }, 800);
     }
   </script>
+
 </body>
 </html>
-
