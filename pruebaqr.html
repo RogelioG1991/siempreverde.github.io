@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portal de Redirección</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm">
+    <h1 class="text-xl font-semibold mb-4 text-center">Portal Siempreverde</h1>
+
+    <input
+      id="texto"
+      type="text"
+      placeholder="Ingresa el texto"
+      class="w-full p-2 border rounded-xl mb-4 focus:outline-none focus:ring"
+    />
+
+    <button
+      onclick="redirigir()"
+      class="w-full bg-black text-white py-2 rounded-xl hover:opacity-90 transition"
+    >
+      Ir a
+    </button>
+
+    <p id="preview" class="text-sm text-gray-500 mt-4 break-all text-center"></p>
+  </div>
+
+  <script>
+    function redirigir() {
+      const texto = document.getElementById("texto").value.trim();
+
+      if (!texto) {
+        alert("Por favor ingresa un texto");
+        return;
+      }
+
+      const url = `https://www.siempreverde.site/${texto}`;
+      window.location.href = url;
+    }
+
+    document.getElementById("texto").addEventListener("input", function () {
+      const texto = this.value.trim();
+      const preview = texto
+        ? `https://www.siempreverde.site/${texto}`
+        : "";
+      document.getElementById("preview").textContent = preview;
+    });
+  </script>
+</body>
+</html>
