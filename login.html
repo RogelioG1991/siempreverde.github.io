@@ -13,8 +13,8 @@
     <input
       id="texto"
       type="text"
-      placeholder="Ingresa el texto"
-      class="w-full p-2 border rounded-xl mb-4 focus:outline-none focus:ring"
+      placeholder="Ingresa tu código"
+      class="w-full p-2 border rounded-xl mb-2 focus:outline-none focus:ring"
     />
 
     <button
@@ -24,20 +24,48 @@
       Ir a
     </button>
 
-    <p id="preview" class="text-sm text-gray-500 mt-4 break-all text-center"></p>
+    <p id="mensaje" class="text-sm mt-3 text-center"></p>
+    <p id="preview" class="text-sm text-gray-400 mt-2 break-all text-center"></p>
   </div>
 
   <script>
+    // ✅ LISTADO PREDEFINIDO DE CÓDIGOS VÁLIDOS
+    const codigosValidos = [
+      "login",
+      "index.html",
+      "panel",
+      "admin",
+      "ventas"
+    ];
+
     function redirigir() {
-      const texto = document.getElementById("texto").value.trim();
+      const input = document.getElementById("texto");
+      const mensaje = document.getElementById("mensaje");
+      const texto = input.value.trim();
 
       if (!texto) {
-        alert("Por favor ingresa un texto");
+        mensaje.textContent = "Por favor ingresa un código.";
+        mensaje.className = "text-sm mt-3 text-center text-red-600";
         return;
       }
 
+      // ✅ VALIDACIÓN CONTRA LISTADO
+      if (!codigosValidos.includes(texto)) {
+        mensaje.textContent = "El código no existe. Intenta de nuevo.";
+        mensaje.className = "text-sm mt-3 text-center text-red-600";
+        input.value = "";
+        input.focus();
+        return;
+      }
+
+      // ✅ SI EL CÓDIGO ES VÁLIDO
       const url = `https://www.siempreverde.site/${texto}`;
-      window.location.href = url;
+      mensaje.textContent = "Código válido. Redirigiendo...";
+      mensaje.className = "text-sm mt-3 text-center text-green-600";
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 800);
     }
 
     document.getElementById("texto").addEventListener("input", function () {
