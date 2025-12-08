@@ -5,6 +5,24 @@
   <title>Portal de Redirección</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- 📱 Mejoras visuales para pantallas móviles -->
+  <style>
+    @media (max-width: 640px) {
+      body {
+        background-size: contain;
+        background-position: top;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #000; /* Fondo elegante si la imagen no llena todo */
+      }
+
+      .card-container {
+        background-color: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(6px);
+      }
+    }
+  </style>
 </head>
 
 <body 
@@ -16,7 +34,7 @@
     background-repeat: no-repeat;
   "
 >
-  <div class="bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg w-full max-w-sm backdrop-blur-sm">
+  <div class="card-container bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg w-full max-w-sm backdrop-blur-sm">
     <h1 class="text-xl font-semibold mb-4 text-center">Portal Siempreverde</h1>
 
     <input
