@@ -44,4 +44,80 @@
   style="
     background-image: url('fondobodalogin.jpg');
     background-size: cover;
-    bac
+    background-position: center;
+    background-repeat: no-repeat;
+  "
+>
+
+  <!-- 🟣 TEXTO SUPERIOR: BIENVENIDA -->
+  <div class="boda-text mb-10">
+    Bienvenidos a nuestra boda
+  </div>
+
+  <!-- TARJETA CENTRAL -->
+  <div class="card-container bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg w-full max-w-sm backdrop-blur-sm">
+    <h1 class="text-xl font-semibold mb-4 text-center">Portal Siempreverde</h1>
+
+    <input
+      id="texto"
+      type="text"
+      placeholder="Ingresa tu código"
+      class="w-full p-2 border rounded-xl mb-2 uppercase focus:outline-none focus:ring"
+      oninput="this.value = this.value.toUpperCase()"
+    />
+
+    <button
+      onclick="redirigir()"
+      class="w-full bg-black text-white py-2 rounded-xl hover:opacity-90 transition"
+    >
+      Ir a
+    </button>
+
+    <p id="mensaje" class="text-sm mt-3 text-center"></p>
+  </div>
+
+  <!-- 🟣 TEXTO INFERIOR: NOMBRES -->
+  <div class="boda-text mt-10 mb-10">
+    Jennifer y Rogelio
+  </div>
+
+  <script>
+    const codigosValidos = [
+      "TR1",
+      "TR2",
+      "TR3",
+      "TR4",
+      "TR5"
+    ];
+
+    function redirigir() {
+      const input = document.getElementById("texto");
+      const mensaje = document.getElementById("mensaje");
+      const texto = input.value.trim().toUpperCase();
+
+      if (!texto) {
+        mensaje.textContent = "Por favor ingresa un código.";
+        mensaje.className = "text-sm mt-3 text-center text-red-600";
+        return;
+      }
+
+      if (!codigosValidos.includes(texto)) {
+        mensaje.textContent = "El código no existe. Intenta de nuevo.";
+        mensaje.className = "text-sm mt-3 text-center text-red-600";
+        input.value = "";
+        input.focus();
+        return;
+      }
+
+      const url = `https://www.siempreverde.site/${texto}`;
+      mensaje.textContent = "Código válido. Redirigiendo...";
+      mensaje.className = "text-sm mt-3 text-center text-green-600";
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 800);
+    }
+  </script>
+
+</body>
+</html>
