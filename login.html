@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen flex items-center justify-center bg-gray-100">
   <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm">
     <h1 class="text-xl font-semibold mb-4 text-center">Portal Siempreverde</h1>
@@ -14,7 +15,8 @@
       id="texto"
       type="text"
       placeholder="Ingresa tu código"
-      class="w-full p-2 border rounded-xl mb-2 focus:outline-none focus:ring"
+      class="w-full p-2 border rounded-xl mb-2 uppercase focus:outline-none focus:ring"
+      oninput="this.value = this.value.toUpperCase()"
     />
 
     <button
@@ -25,11 +27,10 @@
     </button>
 
     <p id="mensaje" class="text-sm mt-3 text-center"></p>
-    <p id="preview" class="text-sm text-gray-400 mt-2 break-all text-center"></p>
   </div>
 
   <script>
-    // ✅ LISTADO PREDEFINIDO DE CÓDIGOS VÁLIDOS
+    // ✅ LISTADO PREDEFINIDO DE CÓDIGOS VÁLIDOS (EN MAYÚSCULAS)
     const codigosValidos = [
       "TR1",
       "TR2",
@@ -41,7 +42,9 @@
     function redirigir() {
       const input = document.getElementById("texto");
       const mensaje = document.getElementById("mensaje");
-      const texto = input.value.trim();
+
+      // Convertir siempre a mayúsculas
+      const texto = input.value.trim().toUpperCase();
 
       if (!texto) {
         mensaje.textContent = "Por favor ingresa un código.";
@@ -49,7 +52,7 @@
         return;
       }
 
-      // ✅ VALIDACIÓN CONTRA LISTADO
+      // ❌ VALIDACIÓN (insensible a mayúsc/minúsc -> gracias al toUpperCase)
       if (!codigosValidos.includes(texto)) {
         mensaje.textContent = "El código no existe. Intenta de nuevo.";
         mensaje.className = "text-sm mt-3 text-center text-red-600";
@@ -67,15 +70,6 @@
         window.location.href = url;
       }, 800);
     }
-
-    document.getElementById("texto").addEventListener("input", function () {
-      const texto = this.value.trim();
-      const preview = texto
-        ? `https://www.siempreverde.site/${texto}`
-        : "";
-      document.getElementById("preview").textContent = preview;
-    });
   </script>
 </body>
 </html>
-
