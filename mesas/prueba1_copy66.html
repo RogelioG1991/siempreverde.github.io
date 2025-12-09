@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenida</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #2c2c2c, #0c0c0c);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 50px 60px;
+      border-radius: 22px;
+      text-align: center;
+      border: 1.5px solid rgba(255, 215, 130, 0.35);
+      box-shadow: 0 0 25px rgba(255, 210, 120, 0.15);
+      backdrop-filter: blur(10px);
+      max-width: 520px;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    .titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #f5e3b2;
+      letter-spacing: 1px;
+    }
+
+    .nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 35px;
+      color: #ffffff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    }
+
+    .subtitulo {
+      font-size: 1.2rem;
+      color: #d4d4d4;
+      margin-bottom: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .numero-mesa {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.2rem;
+      font-weight: 700;
+      color: #ffdd8a;
+      text-shadow: 0 0 12px rgba(255, 220, 150, 0.8);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="card">
+    <div class="titulo">Bienvenido(a)</div>
+    <div id="nombre" class="nombre"></div>
+
+    <div class="subtitulo">Tu número de mesa es</div>
+    <div id="mesa" class="numero-mesa"></div>
+  </div>
+
+<script>
+  // ✨ SOLO EDITA ESTAS VARIABLES PARA PERSONALIZAR CADA INVITADO
+  const nombreInvitado = "María Fernanda";
+  const numeroMesa = "7";
+
+  document.getElementById("nombre").textContent = nombreInvitado;
+  document.getElementById("mesa").textContent = numeroMesa;
+</script>
+
+</body>
+</html>
