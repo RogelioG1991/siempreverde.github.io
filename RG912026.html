@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenida Invitado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f0f0f, #2a2a2a, #4b4b4b);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px 60px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+      max-width: 500px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .name {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #d7d7d7;
+      margin-bottom: 30px;
+    }
+
+    .mesa-label {
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      color: #cfcfcf;
+    }
+
+    .mesa-numero {
+      font-size: 4rem;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      color: #ffd86b;
+      text-shadow: 0 0 10px rgba(255, 216, 107, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="title">Bienvenido(a)</div>
+    <div id="nombre" class="name"></div>
+
+    <div class="mesa-label">Tu número de mesa es</div>
+    <div id="mesa" class="mesa-numero"></div>
+  </div>
+
+<script>
+  // 🔷 EDITA ESTAS DOS VARIABLES PARA PERSONALIZAR LA PÁGINA
+  const nombreInvitado = "Rogelio González";
+  const numeroMesa = "12";
+
+  document.getElementById("nombre").textContent = nombreInvitado;
+  document.getElementById("mesa").textContent = numeroMesa;
+</script>
+
+</body>
+</html>
