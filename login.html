@@ -83,11 +83,8 @@
 
   <script>
     const codigosValidos = [
-      "TR1",
-      "TR2",
-      "TR3",
-      "TR4",
-      "TR5"
+      "JC952026",
+      "RG912026" 
     ];
 
     function redirigir() {
@@ -109,7 +106,7 @@
         return;
       }
 
-      const url = `https://www.siempreverde.site/${texto}`;
+      const url = `https://www.siempreverde.site/mesas/${texto}`;
       mensaje.textContent = "Código válido. Redirigiendo...";
       mensaje.className = "text-sm mt-3 text-center text-green-600";
 
@@ -121,3 +118,4 @@
 
 </body>
 </html>
+
