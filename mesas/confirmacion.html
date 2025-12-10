@@ -6,33 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-slate-100 flex items-center justify-center">
+<body class="min-h-screen bg-slate-900 flex items-center justify-center">
   <div class="w-full max-w-5xl mx-auto p-4 md:p-8">
     <!-- Tarjeta principal -->
-    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-      <!-- Encabezado con degradado -->
-      <div class="relative bg-gradient-to-r from-emerald-500 to-emerald-300 px-6 py-10 md:px-10 md:py-12">
-        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_#ffffff,_transparent_60%)]"></div>
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+      <!-- Encabezado con degradado azul -->
+      <div class="relative bg-gradient-to-r from-slate-900 via-slate-800 to-sky-700 px-6 py-10 md:px-10 md:py-12">
+        <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top,_#ffffff,_transparent_65%)]"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div class="space-y-3 md:space-y-4">
-            <p class="text-sm tracking-[0.25em] uppercase text-emerald-50">
+            <p class="text-xs md:text-sm tracking-[0.3em] uppercase text-sky-100">
               Celebramos el amor
             </p>
-            <h1 class="text-3xl md:text-4xl font-semibold text-white">
-              Confirmación de asistencia a nuestra boda
+            <h1 class="text-3xl md:text-4xl font-semibold text-white leading-tight">
+              Confirmación de asistencia
             </h1>
-            <p class="text-emerald-50 text-sm md:text-base max-w-xl">
-              Tu presencia es el mejor regalo. Por favor completa el formulario para ayudarnos a organizar todos los detalles de este día tan especial.
+            <p class="text-sky-50/90 text-sm md:text-base max-w-xl">
+              Tu presencia es nuestro mejor regalo. Te agradeceremos que completes el formulario para ayudarnos a organizar cada detalle de este día tan especial.
             </p>
           </div>
 
-          <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 text-white text-sm md:text-base shadow-lg">
-            <p class="font-semibold">Detalles del evento</p>
-            <p>Fecha: <span class="font-medium">[Fecha de la boda]</span></p>
-            <p>Lugar: <span class="font-medium">[Nombre del lugar]</span></p>
-            <p class="mt-1 text-emerald-50/80">
-              Te agradeceremos confirmar tu asistencia lo antes posible.
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 text-white text-xs md:text-sm shadow-xl border border-white/20">
+            <p class="font-semibold text-sky-50 mb-1">Detalles del evento</p>
+            <p class="mt-1">
+              Fecha: <span class="font-medium text-sky-100">[Fecha de la boda]</span>
+            </p>
+            <p>
+              Lugar: <span class="font-medium text-sky-100">[Nombre del lugar]</span>
+            </p>
+            <p class="mt-2 text-sky-100/80">
+              Te pedimos confirmar tu asistencia con anticipación.  
+              ¡Será un honor compartir contigo este momento!
             </p>
           </div>
         </div>
@@ -43,26 +48,26 @@
         <!-- Mensaje de bienvenida -->
         <section class="grid md:grid-cols-5 gap-6 md:gap-10 items-start">
           <div class="md:col-span-2 space-y-3">
-            <h2 class="text-xl md:text-2xl font-semibold text-slate-800">
-              ¡Bienvenido al portal de invitados!
+            <h2 class="text-xl md:text-2xl font-semibold text-slate-900">
+              Bienvenido al portal de invitados
             </h2>
             <p class="text-sm md:text-base text-slate-600">
-              Aquí podrás confirmar si nos acompañarás y si vendrás con acompañante. 
-              Tómate un momento para completar tus datos con calma. 
+              Aquí podrás confirmar si nos acompañarás y si asistirás con acompañante.
+              Solo necesitas unos instantes para completar tus datos.
             </p>
             <p class="text-sm md:text-base text-slate-600">
-              La información que compartas se usará únicamente para la organización del evento 
-              y quedará en privado con nosotros.
+              La información que compartas se utilizará únicamente para la organización del evento
+              y será gestionada de forma privada por nosotros.
             </p>
           </div>
 
-          <div class="md:col-span-3 bg-white rounded-2xl shadow-md border border-slate-100 p-4 md:p-5">
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base md:text-lg font-semibold text-slate-800">
+          <div class="md:col-span-3 bg-white rounded-2xl shadow-lg border border-slate-200 p-4 md:p-5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
+              <h3 class="text-base md:text-lg font-semibold text-slate-900">
                 Formulario de confirmación
               </h3>
-              <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
-                Tiempo estimado: 1 minuto
+              <span class="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 text-[11px] font-medium text-sky-800 border border-sky-100">
+                ⏱️ Tiempo estimado: 1 minuto
               </span>
             </div>
             <p class="text-xs md:text-sm text-slate-500 mb-3">
@@ -71,7 +76,7 @@
 
             <!-- Contenedor del iframe -->
             <div class="rounded-xl border border-slate-200 overflow-hidden bg-slate-50">
-              <!-- Sustituye LA_URL_DEL_FORMULARIO por la URL de tu Google Form -->
+              <!-- Puedes agregar ?embedded=true al final del src para una vista aún más limpia -->
               <iframe
                 src="https://docs.google.com/forms/d/e/1FAIpQLScephCLlKU9so3QtoAMcSd03x6UkkOiCpwysy-gIV4gRlo1rA/viewform"
                 width="100%"
@@ -90,8 +95,8 @@
         <!-- Nota final -->
         <section class="border-t border-slate-200 pt-4 md:pt-6">
           <p class="text-xs md:text-sm text-slate-500 text-center md:text-left">
-            Si tienes alguna duda o deseas hacernos saber algo especial 
-            (alergias, canciones que te gustaría escuchar, etc), 
+            Si tienes alguna duda o deseas comentarnos algo especial 
+            (alergias, restricciones alimentarias, canciones que te gustaría escuchar, etc.),
             puedes indicarlo en el espacio de comentarios del formulario.
           </p>
         </section>
