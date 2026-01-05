@@ -85,6 +85,9 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      /* 👇 esto lo “pinta” con la variable si existe */
+      background: var(--sum-bg, #ffffff);
+      border-radius: 10px;
     }
 
     /* Quita el marcador default en algunos navegadores */
@@ -98,9 +101,14 @@
     }
     .transmisiones details[open] summary::after { transform: rotate(180deg); }
 
+    .transmisiones details[open] summary {
+      border-radius: 10px 10px 0 0;
+    }
+
     .transmisiones .panel {
       padding: 0 14px 14px 14px;
       border-top: 1px solid rgba(11, 61, 145, 0.10);
+      background: var(--panel-bg, #ffffff);
     }
 
     .transmisiones .panel a {
@@ -117,39 +125,6 @@
       color: #062a6f;
     }
 
-    /* ✅ Sección Sobre Nosotros (tu bloque) */
-    section#sobre .faq {
-      display: grid;
-      gap: .75rem;
-      margin-top: 1rem;
-    }
-
-    section#sobre details {
-      border: 1px solid rgba(0,0,0,0.10);
-      border-radius: 10px;
-      overflow: hidden;
-      background: #fff;
-    }
-
-    section#sobre summary {
-      cursor: pointer;
-      user-select: none;
-      list-style: none;
-      padding: 14px 14px;
-      font-weight: bold;
-      color: #111;
-    }
-    section#sobre summary::-webkit-details-marker { display: none; }
-
-    section#sobre details p {
-      margin: 0;
-      padding: 0 14px 14px 14px;
-      color: #333;
-      line-height: 1.5;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      padding-top: 12px;
-    }
-
     .footer {
       margin-top: 40px;
       color: #666;
@@ -157,6 +132,18 @@
       padding-bottom: 20px;
       text-align: center;
     }
+
+    /* =========================
+       🎨 COLORES POR NOMBRE
+       (se activan con data-color en <details>)
+       ========================= */
+
+    .transmisiones details[data-color="azul"]   { --sum-bg:#eaf2ff; --panel-bg:#f6f9ff; }
+    .transmisiones details[data-color="gris"]   { --sum-bg:#f2f3f5; --panel-bg:#fafafa; }
+    .transmisiones details[data-color="verde"]  { --sum-bg:#e9f7ef; --panel-bg:#f4fbf7; }
+    .transmisiones details[data-color="rojo"]   { --sum-bg:#fdecec; --panel-bg:#fff7f7; }
+    .transmisiones details[data-color="morado"] { --sum-bg:#f2eaff; --panel-bg:#faf6ff; }
+
   </style>
 </head>
 <body>
@@ -175,7 +162,6 @@
     <div class="transmisiones" id="transmisiones"></div>
   </div>
 
-
   <div class="footer">
     © 2026 Roger Deportes GT no es dueño del contenido y no monetiza, solamente filtramos links del internet y los compartimos para los amantes del deporte.
   </div>
@@ -191,8 +177,25 @@
 
     const contenedor = document.getElementById('transmisiones');
 
-    function crearAcordeon(titulo, links, archivo) {
+    // ✅ Normaliza alias (por si alguien escribe "green", "blue", etc.)
+    function normalizarColor(valor) {
+      const v = (valor || '').trim().toLowerCase();
+      const mapa = {
+        blue: 'azul',
+        gray: 'gris',
+        grey: 'gris',
+        green: 'verde',
+        red: 'rojo',
+        purple: 'morado'
+      };
+      return mapa[v] || v || 'default';
+    }
+
+    function crearAcordeon(titulo, links, archivo, color) {
       const details = document.createElement('details');
+
+      // 👇 esto activa el CSS: details[data-color="verde"] { ... }
+      details.dataset.color = normalizarColor(color);
 
       const summary = document.createElement('summary');
       summary.textContent = titulo || archivo;
@@ -221,7 +224,7 @@
       return details;
     }
 
-    // 🔹 Carga en orden 1→20, leyendo título + 3 links desde cada TRx.html
+    // 🔹 Carga en orden 1→20, leyendo título + 3 links + color desde cada TRx.html
     async function cargarTransmisiones() {
       for (let archivo of archivos) {
         const url = archivo + '?v=' + new Date().getTime();
@@ -233,16 +236,16 @@
           const parser = new DOMParser();
           const doc = parser.parseFromString(data, 'text/html');
 
-          // ✅ Título: busca el h2 dentro de .container (igual que tu lógica actual)
+          // ✅ Título: busca el h2 dentro de .container (igual que tu lógica)
           const h2 = doc.querySelector('.container h2') || doc.querySelector('h2');
           const titulo = h2 ? h2.innerText.trim() : archivo;
 
-          // ✅ Links: preferimos .links a (plantilla recomendada). Si no existe, tomamos los primeros 3 <a> del .container
-          let anchors = Array.from(doc.querySelectorAll('.links a'));
-          if (anchors.length === 0) {
-            const scope = doc.querySelector('.container') || doc.body;
-            anchors = Array.from(scope.querySelectorAll('a'));
-          }
+          // ✅ Color: lee <meta name="acordeon-color" content="verde">
+          const metaColor = doc.querySelector('meta[name="acordeon-color"]');
+          const color = metaColor ? metaColor.getAttribute('content') : 'default';
+
+          // ✅ Links: SOLO .links a (para que no agarre "Volver a inicio")
+          const anchors = Array.from(doc.querySelectorAll('.links a'));
 
           const links = anchors
             .filter(a => (a.getAttribute('href') || '').trim() !== '')
@@ -252,10 +255,10 @@
               text: (a.textContent || '').trim()
             }));
 
-          contenedor.appendChild(crearAcordeon(titulo, links, archivo));
+          contenedor.appendChild(crearAcordeon(titulo, links, archivo, color));
         } catch (err) {
           console.error(`Error cargando ${archivo}:`, err);
-          contenedor.appendChild(crearAcordeon(`Error con ${archivo}`, [], archivo));
+          contenedor.appendChild(crearAcordeon(`Error con ${archivo}`, [], archivo, 'gris'));
         }
       }
     }
@@ -265,5 +268,3 @@
 
 </body>
 </html>
-
-
