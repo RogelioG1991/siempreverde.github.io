@@ -15,18 +15,64 @@
       margin: 0;
       padding: 0;
       text-align: center;
-
-      /* ✅ Para poder poner el “watermark” detrás */
-      position: relative;
       overflow-x: hidden;
     }
 
+    header {
+      background-color: #0b3d91;
+      color: white;
+      padding: 20px 0;
+      font-size: 2em;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
 
+    header img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .container {
+      margin: 40px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .transmisiones a {
+      display: block;
+      font-size: 1.4em;
+      color: #0b3d91;
+      text-decoration: none;
+      margin: 12px 0;
+      transition: color 0.3s;
+    }
+
+    .transmisiones a:hover {
+      color: #062a6f;
+    }
+
+    .footer {
+      margin-top: 40px;
+      color: #666;
+      font-size: 0.9em;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
 
   <header>
     <img src="rogerd.jpeg" alt="Logo Roger Deportes GT">
-    Roger Deportes GT<br>
-    Feliz navidad y prospero año nuevo 2026
+    Roger Deportes GT
   </header>
 
   <div class="container">
@@ -49,7 +95,7 @@
 
     const contenedor = document.getElementById('transmisiones');
 
-    // 🔹 Función asíncrona para garantizar orden 1→10
+    // 🔹 Función asíncrona para garantizar orden 1→20
     async function cargarTransmisiones() {
       for (let archivo of archivos) {
         const url = archivo + '?v=' + new Date().getTime();
@@ -84,4 +130,4 @@
   </script>
 
 </body>
-</html>"
+</html>
