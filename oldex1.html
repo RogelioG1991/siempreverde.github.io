@@ -1,192 +1,104 @@
-<!DOCTYPE html> 
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Roger Deportes GT</title>
-  
-  <!-- 🔹 Icono de la pestaña -->
-  <link rel="icon" type="image/jpeg" href="rogerd.jpeg">
+<script>
+  // ✅ Config por "espacio" (TR1..TR20) con sus versiones
+  // Edita los nombres de archivo a como los tengas en tu repo:
+  // Ej: TR1.html, TR1_v2.html, TR1_v3.html (o TR1a.html, TR1b.html, etc.)
+  const transmisionesConfig = [
+    { id: "TR1",  opciones: ["TR1.html", "TR1_v2.html", "TR1_v3.html"] },
+    { id: "TR2",  opciones: ["TR2.html"] },
+    { id: "TR3",  opciones: ["TR3.html", "TR3_alt.html"] },
+    { id: "TR4",  opciones: ["TR4.html"] },
+    { id: "TR5",  opciones: ["TR5.html"] },
+    { id: "TR6",  opciones: ["TR6.html"] },
+    { id: "TR7",  opciones: ["TR7.html"] },
+    { id: "TR8",  opciones: ["TR8.html"] },
+    { id: "TR9",  opciones: ["TR9.html"] },
+    { id: "TR10", opciones: ["TR10.html"] },
+    { id: "TR11", opciones: ["TR11.html"] },
+    { id: "TR12", opciones: ["TR12.html"] },
+    { id: "TR13", opciones: ["TR13.html"] },
+    { id: "TR14", opciones: ["TR14.html"] },
+    { id: "TR15", opciones: ["TR15.html"] },
+    { id: "TR16", opciones: ["TR16.html"] },
+    { id: "TR17", opciones: ["TR17.html"] },
+    { id: "TR18", opciones: ["TR18.html"] },
+    { id: "TR19", opciones: ["TR19.html"] },
+    { id: "TR20", opciones: ["TR20.html"] },
+  ];
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+  const contenedor = document.getElementById("transmisiones");
 
-      /* ✅ Para poder poner el “watermark” detrás */
-      position: relative;
-      overflow-x: hidden;
-    }
-
-   /* ✅ Watermark navideño ROJO/VERDE (trazos) en el fondo general */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iOTAwIiB2aWV3Qm94PSIwIDAgOTAwIDkwMCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5ze2ZpbGw6bm9uZTtzdHJva2Utd2lkdGg6MTI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO30KICAgICAgLnJ7c3Ryb2tlOiNjNjI4Mjg7c3Ryb2tlLW9wYWNpdHk6LjIyfQogICAgICAuZ3tzdHJva2U6IzJlN2QzMjtzdHJva2Utb3BhY2l0eTouMjJ9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KCiAgPGcgY2xhc3M9ImcgcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIwIDI0MCkgcm90YXRlKC0xMCkiPgogICAgPHBhdGggZD0iTTAgLTcwIFY3MCIvPgogICAgPHBhdGggZD0iTS03MCAwIEg3MCIvPgogICAgPHBhdGggZD0iTS01MCAtNTAgTDUwIDUwIi8+CiAgICA8cGF0aCBkPSJNNTAgLTUwIEwtNTAgNTAiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJyIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc2MCAyMjApIHJvdGF0ZSg4KSI+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iNjIiLz4KICAgIDxwYXRoIGQ9Ik0tMTggLTc4IEMtMTAgLTExMCAxMCAtMTEwIDE4IC03OCIvPgogICAgPHBhdGggZD0iTS0xMCAtODIgSDEwIi8+CiAgPC9nPgoKICA8ZyBjbGFzcz0iciBzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMTAgNjkwKSByb3RhdGUoLTgpIj4KICAgIDxwYXRoIGQ9Ik00MCAtODAgQzQwIC0xMzAgLTQwIC0xMzAgLTQwIC04MCIvPgogICAgPHBhdGggZD0iTS00MCAtODAgVjExMCIvPgogICAgPHBhdGggZD0iTS0yMCAtMjAgSDIwIi8+CiAgICA8cGF0aCBkPSJNLTIwIDIwIEgyMCIvPgogICAgPHBhdGggZD0iTS0yMCA2MCBIMjAiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJnIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyMCA3MDApIHJvdGF0ZSg2KSI+CiAgICA8cGF0aCBkPSJNMCAtMTIwIEwtODUgMjAgTDg1IDIwIFoiLz4KICAgIDxwYXRoIGQ9Ik0wIDIwIFYxMjAiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJyIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExMCA5MCkgcm90YXRlKDQpIj4KICAgIDxwYXRoIGQ9Ik0tODUgLTQwIEg4NSBWOTAgSC04NSBaIi8+CiAgICA8cGF0aCBkPSJNMCAtNDAgVjkwIi8+CiAgICA8cGF0aCBkPSJNLTg1IDE1IEg4NSIvPgogICAgPHBhdGggZD0iTS0xMCAtNjAgQy00MCAtNjAgLTU1IC0zMCAtMjUgLTIwIEMtNSAtMTUgMCAtMzAgMCAtNDAiLz4KICAgIDxwYXRoIGQ9Ik0xMCAtNjAgQzQwIC02MCA1NSAtMzAgMjUgLTIwIEM1IC0xNSAwIC0zMCAwIC00MCIvPgogIDwvZz4KCiAgPGcgY2xhc3M9ImcgcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDYwIDE0MCkgcm90YXRlKC02KSI+CiAgICA8cGF0aCBkPSJNMCAtNzAgTDE4IC0yMiBMNzAgLTE4IEwyOCAxMiBMNDAgNjIgTDAgMzUgTC00MCA2MiBMLTI4IDEyIEwtNzAgLTE4IEwtMTggLTIyIFoiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJyIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ2MCA3NzApIHJvdGF0ZSgyKSI+CiAgICA8cGF0aCBkPSJNLTY1IC0yMCBDLTY1IC05MCAtMzUgLTEzMCAwIC0xMzAgQzM1IC0xMzAgNjUgLTkwIDY1IC0yMCIvPgogICAgPHBhdGggZD0iTS04NSAtMjAgSDg1Ii8+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iLTEwIiByPSIxMiIvPgogICAgPHBhdGggZD0iTTAgLTE0NSBWLTE2NSIvPgogICAgPHBhdGggZD0iTS0xNSAtMTY1IEgxNSIvPgogIDwvZz4KCiAgPGc+CiAgICA8Y2lyY2xlIGN4PSIzMzAiIGN5PSIzMTAiIHI9IjYiIGZpbGw9IiMyZTdkMzIiIGZpbGwtb3BhY2l0eT0iLjEyIi8+CiAgICA8Y2lyY2xlIGN4PSI2MTAiIGN5PSIzNjAiIHI9IjUiIGZpbGw9IiNjNjI4MjgiIGZpbGwtb3BhY2l0eT0iLjEwIi8+CiAgICA8Y2lyY2xlIGN4PSI1MjAiIGN5PSI1MjAiIHI9IjYiIGZpbGw9IiMyZTdkMzIiIGZpbGwtb3BhY2l0eT0iLjEyIi8+CiAgICA8Y2lyY2xlIGN4PSIyOTAiIGN5PSI1NjAiIHI9IjUiIGZpbGw9IiNjNjI4MjgiIGZpbGwtb3BhY2l0eT0iLjEwIi8+CiAgICA8Y2lyY2xlIGN4PSI2NTAiIGN5PSI2MTAiIHI9IjUiIGZpbGw9IiMyZTdkMzIiIGZpbGwtb3BhY2l0eT0iLjEyIi8+CiAgPC9nPgo8L3N2Zz4=");
-
-  background-repeat: repeat;
-  background-size: 700px 700px;
-
-  /* 👇 siempre “transparentes”, pero con color vivo */
-  opacity: 1;
-  filter: saturate(1.35) contrast(1.05);
-}
-
-    header {
-      background-color: #0b3d91;
-      color: white;
-      padding: 20px 0;
-      font-size: 2em;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-
-      /* ✅ encima del watermark */
-      position: relative;
-      z-index: 1;
-    }
-
-    header img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid white;
-    }
-
-    .container {
-      margin: 40px auto;
-      max-width: 800px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-
-      /* ✅ encima del watermark */
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ✅ Watermark dentro de la tarjeta (más suave para no competir con el texto) */
-.container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
-  pointer-events: none;
-  z-index: 0;
-
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iOTAwIiB2aWV3Qm94PSIwIDAgOTAwIDkwMCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5ze2ZpbGw6bm9uZTtzdHJva2Utd2lkdGg6MTI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO30KICAgICAgLnJ7c3Ryb2tlOiNjNjI4Mjg7c3Ryb2tlLW9wYWNpdHk6LjIyfQogICAgICAuZ3tzdHJva2U6IzJlN2QzMjtzdHJva2Utb3BhY2l0eTouMjJ9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KCiAgPGcgY2xhc3M9ImcgcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIwIDI0MCkgcm90YXRlKC0xMCkiPgogICAgPHBhdGggZD0iTTAgLTcwIFY3MCIvPgogICAgPHBhdGggZD0iTS03MCAwIEg3MCIvPgogICAgPHBhdGggZD0iTS01MCAtNTAgTDUwIDUwIi8+CiAgICA8cGF0aCBkPSJNNTAgLTUwIEwtNTAgNTAiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJyIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc2MCAyMjApIHJvdGF0ZSg4KSI+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iNjIiLz4KICAgIDxwYXRoIGQ9Ik0tMTggLTc4IEMtMTAgLTExMCAxMCAtMTEwIDE4IC03OCIvPgogICAgPHBhdGggZD0iTS0xMCAtODIgSDEwIi8+CiAgPC9nPgoKICA8ZyBjbGFzcz0iciBzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMTAgNjkwKSByb3RhdGUoLTgpIj4KICAgIDxwYXRoIGQ9Ik00MCAtODAgQzQwIC0xMzAgLTQwIC0xMzAgLTQwIC04MCIvPgogICAgPHBhdGggZD0iTS00MCAtODAgVjExMCIvPgogICAgPHBhdGggZD0iTS0yMCAtMjAgSDIwIi8+CiAgICA8cGF0aCBkPSJNLTIwIDIwIEgyMCIvPgogICAgPHBhdGggZD0iTS0yMCA2MCBIMjAiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJnIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyMCA3MDApIHJvdGF0ZSg2KSI+CiAgICA8cGF0aCBkPSJNMCAtMTIwIEwtODUgMjAgTDg1IDIwIFoiLz4KICAgIDxwYXRoIGQ9Ik0wIDIwIFYxMjAiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJyIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExMCA5MCkgcm90YXRlKDQpIj4KICAgIDxwYXRoIGQ9Ik0tODUgLTQwIEg4NSBWOTAgSC04NSBaIi8+CiAgICA8cGF0aCBkPSJNMCAtNDAgVjkwIi8+CiAgICA8cGF0aCBkPSJNLTg1IDE1IEg4NSIvPgogICAgPHBhdGggZD0iTS0xMCAtNjAgQy00MCAtNjAgLTU1IC0zMCAtMjUgLTIwIEMtNSAtMTUgMCAtMzAgMCAtNDAiLz4KICAgIDxwYXRoIGQ9Ik0xMCAtNjAgQzQwIC02MCA1NSAtMzAgMjUgLTIwIEM1IC0xNSAwIC0zMCAwIC00MCIvPgogIDwvZz4KCiAgPGcgY2xhc3M9ImcgcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDYwIDE0MCkgcm90YXRlKC02KSI+CiAgICA8cGF0aCBkPSJNMCAtNzAgTDE4IC0yMiBMNzAgLTE4IEwyOCAxMiBMNDAgNjIgTDAgMzUgTC00MCA2MiBMLTI4IDEyIEwtNzAgLTE4IEwtMTggLTIyIFoiLz4KICA8L2c+CgogIDxnIGNsYXNzPSJyIHM iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ2MCA3NzApIHJvdGF0ZSgyKSI+CiAgICA8cGF0aCBkPSJNLTY1IC0yMCBDLTY1IC05MCAtMzUgLTEzMCAwIC0xMzAgQzM1IC0xMzAgNjUgLTkwIDY1IC0yMCIvPgogICAgPHBhdGggZD0iTS04NSAtMjAgSDg1Ii8+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iLTEwIiByPSIxMiIvPgogICAgPHBhdGggZD0iTTAgLTE0NSBWLTE2NSIvPgogICAgPHBhdGggZD0iTS0xNSAtMTY1IEgxNSIvPgogIDwvZz4KCiAgPGc+CiAgICA8Y2lyY2xlIGN4PSIzMzAiIGN5PSIzMTAiIHI9IjYiIGZpbGw9IiMyZTdkMzIiIGZpbGwtb3BhY2l0eT0iLjEyIi8+CiAgICA8Y2lyY2xlIGN4PSI2MTAiIGN5PSIzNjAiIHI9IjUiIGZpbGw9IiNjNjI4MjgiIGZpbGwtb3BhY2l0eT0iLjEwIi8+CiAgICA8Y2lyY2xlIGN4PSI1MjAiIGN5PSI1MjAiIHI9IjYiIGZpbGw9IiMyZTdkMzIiIGZpbGwtb3BhY2l0eT0iLjEyIi8+CiAgICA8Y2lyY2xlIGN4PSIyOTAiIGN5PSI1NjAiIHI9IjUiIGZpbGw9IiNjNjI4MjgiIGZpbGwtb3BhY2l0eT0iLjEwIi8+CiAgICA8Y2lyY2xlIGN4PSI2NTAiIGN5PSI2MTAiIHI9IjUiIGZpbGw9IiMyZTdkMzIiIGZpbGwtb3BhY2l0eT0iLjEyIi8+CiAgPC9nPgo8L3N2Zz4=");
-
-  background-repeat: repeat;
-  background-size: 800px 800px;
-
-  /* 👇 más suave dentro de la tarjeta */
-  opacity: 0.45;
-  filter: saturate(1.35) contrast(1.05);
+  function cacheBust(url) {
+    return url + (url.includes("?") ? "&" : "?") + "v=" + Date.now();
   }
 
-    /* ✅ Asegurar que el texto de adentro quede encima del watermark interno */
-    .container > * {
-      position: relative;
-      z-index: 1;
+  async function obtenerTituloDesdeArchivo(archivo, fallbackText) {
+    try {
+      const response = await fetch(cacheBust(archivo));
+      const html = await response.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const h2 = doc.querySelector(".container h2");
+      return (h2 && h2.innerText.trim()) ? h2.innerText.trim() : fallbackText;
+    } catch (e) {
+      console.error("Error leyendo título de", archivo, e);
+      return fallbackText;
     }
+  }
 
-    .transmisiones a {
-      display: block;
-      font-size: 1.4em;
-      color: #0b3d91;
-      text-decoration: none;
-      margin: 12px 0;
-      transition: color 0.3s;
+  function labelOpcion(idx) {
+    // Puedes cambiar esto a "Servidor 1", "Servidor 2", etc.
+    return `Opción ${idx + 1}`;
+  }
+
+  async function render() {
+    contenedor.innerHTML = "";
+
+    for (const item of transmisionesConfig) {
+      const { id, opciones } = item;
+
+      // recordamos la última selección por TR
+      const storageKey = `rg_${id}_sel`;
+      const guardado = localStorage.getItem(storageKey);
+      const seleccionadoInicial = (guardado && opciones.includes(guardado)) ? guardado : opciones[0];
+
+      // fila
+      const row = document.createElement("div");
+      row.className = "transmision-item";
+
+      // link
+      const link = document.createElement("a");
+      link.href = seleccionadoInicial;
+      link.textContent = "Cargando...";
+      row.appendChild(link);
+
+      // selector
+      const select = document.createElement("select");
+      opciones.forEach((archivo, idx) => {
+        const opt = document.createElement("option");
+        opt.value = archivo;
+        opt.textContent = labelOpcion(idx);
+        if (archivo === seleccionadoInicial) opt.selected = true;
+        select.appendChild(opt);
+      });
+
+      // si solo hay 1 opción, lo dejamos visible pero deshabilitado (igual hay menú)
+      select.disabled = opciones.length <= 1;
+
+      select.addEventListener("change", async () => {
+        const elegido = select.value;
+        localStorage.setItem(storageKey, elegido);
+        link.href = elegido;
+
+        // actualiza título según el HTML elegido
+        link.textContent = await obtenerTituloDesdeArchivo(elegido, `${id}`);
+      });
+
+      row.appendChild(select);
+      contenedor.appendChild(row);
+
+      // carga inicial del título (según opción seleccionada)
+      link.textContent = await obtenerTituloDesdeArchivo(seleccionadoInicial, `${id}`);
     }
+  }
 
-    .transmisiones a:hover {
-      color: #062a6f;
-    }
-
-    .footer {
-      margin-top: 40px;
-      color: #666;
-      font-size: 0.9em;
-      padding-bottom: 20px;
-
-      /* ✅ encima del watermark */
-      position: relative;
-      z-index: 1;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <img src="rogerd.jpeg" alt="Logo Roger Deportes GT">
-    Roger Deportes GT<br>
-    Feliz navidad y prospero año nuevo 2026
-  </header>
-
-  <div class="container">
-    <h2>Transmisiones en vivo</h2>
-    <div class="transmisiones" id="transmisiones"></div>
-  </div>
-
-  <div class="footer">
-    © 2025 Roger Deportes GT no es dueño del contenido y no monetiza, solamente filtramos links del internet y los compartimos para los amantes del deporte.
-  </div>
-
-  <script>
-    // 🔹 Lista de transmisiones en orden fijo
-    const archivos = [
-      'TR1.html', 'TR2.html', 'TR3.html', 'TR4.html', 'TR5.html',
-      'TR6.html', 'TR7.html', 'TR8.html', 'TR9.html', 'TR10.html',
-      'TR11.html', 'TR12.html', 'TR13.html', 'TR14.html', 'TR15.html',
-      'TR16.html', 'TR17.html', 'TR18.html', 'TR19.html', 'TR20.html'
-    ];
-
-    const contenedor = document.getElementById('transmisiones');
-
-    // 🔹 Función asíncrona para garantizar orden 1→10
-    async function cargarTransmisiones() {
-      for (let archivo of archivos) {
-        const url = archivo + '?v=' + new Date().getTime();
-
-        try {
-          const response = await fetch(url);
-          const data = await response.text();
-
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(data, 'text/html');
-
-          const h2 = doc.querySelector('.container h2');
-          const texto = h2 ? h2.innerText : archivo;
-
-          const link = document.createElement('a');
-          link.href = archivo;
-          link.textContent = texto;
-
-          contenedor.appendChild(link);
-        } catch (err) {
-          console.error(`Error cargando ${archivo}:`, err);
-          const link = document.createElement('a');
-          link.href = archivo;
-          link.textContent = `Error con ${archivo}`;
-          contenedor.appendChild(link);
-        }
-      }
-    }
-
-    // Ejecutar la carga en orden
-    cargarTransmisiones();
-  </script>
-
-</body>
-</html>
+  render();
+</script>
