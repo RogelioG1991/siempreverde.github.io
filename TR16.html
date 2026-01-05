@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,6 +32,7 @@
       align-items: center;
       max-width: 1000px;
       margin: 0 auto;
+      gap: 12px;
     }
 
     header img {
@@ -42,12 +42,14 @@
       object-fit: cover;
       border: 2px solid white;
       margin-right: 15px;
+      flex: 0 0 auto;
     }
 
     .titulo {
       display: flex;
       align-items: center;
       font-size: 1em;
+      white-space: nowrap;
     }
 
     .volver-inicio {
@@ -55,6 +57,7 @@
       color: white;
       text-decoration: none;
       transition: color 0.3s, text-decoration 0.3s;
+      white-space: nowrap;
     }
 
     .volver-inicio:hover {
@@ -70,6 +73,47 @@
       background: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 0.95em;
+      line-height: 1.5;
+      margin: 0.25rem 0 1rem 0;
+      text-align: center;
+    }
+
+    /* ✅ Bloque de 3 links (lo que el index debe leer) */
+    .links {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 18px 0;
+    }
+
+    .links a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #0b3d91;
+      font-weight: bold;
+      border: 1px solid rgba(11, 61, 145, 0.18);
+      background: #f7f9ff;
+      transition: transform 0.08s ease, background 0.2s ease, color 0.2s ease;
+      text-align: center;
+      word-break: break-word;
+    }
+
+    .links a:hover {
+      background: #eef3ff;
+      color: #062a6f;
+      transform: translateY(-1px);
     }
 
     iframe {
@@ -78,6 +122,25 @@
       border: none;
       border-radius: 10px;
     }
+
+    .acciones {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      cursor: pointer;
+      border: 1px solid rgba(11, 61, 145, 0.18);
+      background: #fff;
+      color: #0b3d91;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    .btn:hover { background: #f7f9ff; }
 
     .footer {
       margin-top: 40px;
@@ -102,14 +165,28 @@
 
   <!-- 🔹 Contenedor principal -->
   <div class="container">
-    <h2>15 # DEPORTES GT</h2>
+    <!-- ✅ Este h2 lo toma tu index como título -->
+    <h2>CAN 12:00 Nigéria - Mozambique </h2>
+    <p class="muted">Elegí una opción. Si una no carga aquí, abrila en otra pestaña o probá otra.</p>
 
-    <!-- Aquí puedes insertar un enlace de YouTube u otra plataforma -->
-    <iframe
-      src="LINK"
+    <!-- ✅ Estos 3 links los leerá el index (solo .links a) -->
+    <div class="links">
+      <a href="https://siempreverde.site/acortador.html?get=https://futbollibrelibre.com/canales.php?stream=winsports">Opción: 1 WINN SPORT</a>
+      <a href="https://siempreverde.site/acortador.html?get=https://kakarotfoot.ru/yu/3/82">Opción: 2 WINN</a>
+      <a href="https://siempreverde.site/acortador.html?get=https://kakarotfoot.ru/yu/3/61">Opción: 3 LIGA DE CAMPEONES</a>
+    </div>
+
+    <!-- ✅ Arranca con el Link 1 -->
+    <iframe id="player"
+      src="LINK1"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen>
     </iframe>
+
+    <div class="acciones">
+      <button class="btn" id="abrirNueva">Abrir lo actual en nueva pestaña</button>
+      <button class="btn" id="recargar">Recargar</button>
+    </div>
   </div>
 
   <!-- 🔹 Pie de página -->
@@ -117,8 +194,38 @@
     © 2025 Roger Deportes GT no es dueño del contenido y no monetiza, solamente filtramos links del internet y los compartimos para los amantes del deporte.
   </div>
 
+  <script>
+    const iframe = document.getElementById('player');
+    const links = document.querySelectorAll('.links a');
+
+    // ✅ Click en opción = cargar en el iframe
+    links.forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        if (href && href !== 'LINK' && href !== '#') {
+          iframe.src = href;
+          iframe.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ✅ Abrir lo que esté en el iframe
+    document.getElementById('abrirNueva').addEventListener('click', () => {
+      if (iframe.src) window.open(iframe.src, '_blank', 'noopener');
+    });
+
+    // ✅ Recargar el iframe
+    document.getElementById('recargar').addEventListener('click', () => {
+      const current = iframe.src;
+      iframe.src = current;
+    });
+  </script>
+
 </body>
 </html>
+
+
 
 
 
