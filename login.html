@@ -81,11 +81,12 @@
     Jennifer y Rogelio
   </div>
 
-  <script>
-    const codigosValidos = [
-      "JC952026",
-      "RG912026" 
-    ];
+ <script>
+  // MR5, MR10, MR15, ... MR400
+  const codigosValidos = Array.from(
+    { length: 400 / 5 },
+    (_, i) => `MR${(i + 1) * 5}`
+  );
 
     function redirigir() {
       const input = document.getElementById("texto");
@@ -118,4 +119,5 @@
 
 </body>
 </html>
+
 
