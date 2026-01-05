@@ -59,6 +59,56 @@
       color: #062a6f;
     }
 
+    /* ===========================
+       ✅ Dropdown para TR1
+       =========================== */
+    .transmisiones .dropdown {
+      position: relative;
+      display: block;
+      margin: 12px 0;
+    }
+
+    /* Botón que se ve como link (misma vibra visual) */
+    .transmisiones .dropbtn {
+      display: block;
+      width: 100%;
+      font-size: 1.4em;
+      color: #0b3d91;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .transmisiones .dropbtn:hover {
+      color: #062a6f;
+    }
+
+    .transmisiones .dropbtn .chev {
+      font-size: 0.9em;
+      margin-left: 6px;
+      opacity: 0.85;
+    }
+
+    /* Menú desplegable */
+    .transmisiones .dropdown-content {
+      display: none;
+      margin-top: 6px;
+    }
+
+    .transmisiones .dropdown.open .dropdown-content {
+      display: block;
+    }
+
+    .transmisiones .dropdown-content a {
+      font-size: 1.15em;
+      margin: 6px 0;
+      padding-left: 18px;
+    }
+
     .footer {
       margin-top: 40px;
       color: #666;
@@ -94,7 +144,25 @@
 
     const contenedor = document.getElementById('transmisiones');
 
-    // 🔹 Función asíncrona para garantizar orden 1→10
+    // ✅ Cierra cualquier dropdown abierto (útil si luego agregas más)
+    function closeDropdowns(except = null) {
+      document.querySelectorAll('.transmisiones .dropdown.open').forEach(dd => {
+        if (dd !== except) {
+          dd.classList.remove('open');
+          const b = dd.querySelector('.dropbtn');
+          if (b) b.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Clic afuera cierra
+    document.addEventListener('click', () => closeDropdowns());
+    // ESC cierra
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDropdowns();
+    });
+
+    // 🔹 Función asíncrona para garantizar orden 1→20
     async function cargarTransmisiones() {
       for (let archivo of archivos) {
         const url = archivo + '?v=' + new Date().getTime();
@@ -109,17 +177,118 @@
           const h2 = doc.querySelector('.container h2');
           const texto = h2 ? h2.innerText : archivo;
 
-          const link = document.createElement('a');
-          link.href = archivo;
-          link.textContent = texto;
+          // ✅ Si es TR1, crear dropdown con 3 links
+          if (archivo.toUpperCase() === 'TR1.HTML') {
+            const dropdown = document.createElement('div');
+            dropdown.className = 'dropdown';
 
-          contenedor.appendChild(link);
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'dropbtn';
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = `${texto} <span class="chev">▾</span>`;
+
+            const menu = document.createElement('div');
+            menu.className = 'dropdown-content';
+
+            const a1 = document.createElement('a');
+            a1.href = 'TR1.html?link=1';
+            a1.textContent = '↳ Link 1';
+
+            const a2 = document.createElement('a');
+            a2.href = 'TR1.html?link=2';
+            a2.textContent = '↳ Link 2';
+
+            const a3 = document.createElement('a');
+            a3.href = 'TR1.html?link=3';
+            a3.textContent = '↳ Link 3';
+
+            menu.appendChild(a1);
+            menu.appendChild(a2);
+            menu.appendChild(a3);
+
+            dropdown.appendChild(btn);
+            dropdown.appendChild(menu);
+            contenedor.appendChild(dropdown);
+
+            // Toggle del menú
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const isOpen = dropdown.classList.contains('open');
+              closeDropdowns();
+              if (!isOpen) {
+                dropdown.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+              } else {
+                dropdown.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+              }
+            });
+
+          } else {
+            // ✅ Los demás quedan como link normal
+            const link = document.createElement('a');
+            link.href = archivo;
+            link.textContent = texto;
+            contenedor.appendChild(link);
+          }
+
         } catch (err) {
           console.error(`Error cargando ${archivo}:`, err);
-          const link = document.createElement('a');
-          link.href = archivo;
-          link.textContent = `Error con ${archivo}`;
-          contenedor.appendChild(link);
+
+          // En error: TR1 sigue mostrando dropdown (pero con etiqueta de error)
+          if (archivo.toUpperCase() === 'TR1.HTML') {
+            const dropdown = document.createElement('div');
+            dropdown.className = 'dropdown';
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'dropbtn';
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = `Error con TR1 <span class="chev">▾</span>`;
+
+            const menu = document.createElement('div');
+            menu.className = 'dropdown-content';
+
+            const a1 = document.createElement('a');
+            a1.href = 'TR1.html?link=1';
+            a1.textContent = '↳ Link 1';
+
+            const a2 = document.createElement('a');
+            a2.href = 'TR1.html?link=2';
+            a2.textContent = '↳ Link 2';
+
+            const a3 = document.createElement('a');
+            a3.href = 'TR1.html?link=3';
+            a3.textContent = '↳ Link 3';
+
+            menu.appendChild(a1);
+            menu.appendChild(a2);
+            menu.appendChild(a3);
+
+            dropdown.appendChild(btn);
+            dropdown.appendChild(menu);
+            contenedor.appendChild(dropdown);
+
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const isOpen = dropdown.classList.contains('open');
+              closeDropdowns();
+              if (!isOpen) {
+                dropdown.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+              } else {
+                dropdown.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+              }
+            });
+
+          } else {
+            const link = document.createElement('a');
+            link.href = archivo;
+            link.textContent = `Error con ${archivo}`;
+            contenedor.appendChild(link);
+          }
         }
       }
     }
@@ -130,5 +299,3 @@
 
 </body>
 </html>
-
-
