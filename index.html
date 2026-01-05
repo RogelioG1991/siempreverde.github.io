@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roger Deportes GT</title>
+
+  <!-- 🔹 Icono de la pestaña -->
+  <link rel="icon" type="image/jpeg" href="rogerd.jpeg">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #0b3d91;
+      color: white;
+      padding: 20px 0;
+      font-size: 2em;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .container {
+      margin: 40px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .container h2 {
+      margin: 0 0 10px 0;
+      text-align: center;
+    }
+
+    .muted {
+      color: #666;
+      margin: 0.25rem 0 0;
+      line-height: 1.5;
+    }
+
+    /* ✅ Acordeones de transmisiones */
+    .transmisiones {
+      display: grid;
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+
+    .transmisiones details {
+      border: 1px solid rgba(11, 61, 145, 0.18);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .transmisiones summary {
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      padding: 14px 14px;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #0b3d91;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* Quita el marcador default en algunos navegadores */
+    .transmisiones summary::-webkit-details-marker { display: none; }
+
+    .transmisiones summary::after {
+      content: "▾";
+      font-size: 1.1em;
+      color: rgba(11, 61, 145, 0.75);
+      transition: transform .2s ease;
+    }
+    .transmisiones details[open] summary::after { transform: rotate(180deg); }
+
+    .transmisiones .panel {
+      padding: 0 14px 14px 14px;
+      border-top: 1px solid rgba(11, 61, 145, 0.10);
+    }
+
+    .transmisiones .panel a {
+      display: block;
+      font-size: 1.05em;
+      color: #0b3d91;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: color 0.3s;
+      word-break: break-word;
+    }
+
+    .transmisiones .panel a:hover {
+      color: #062a6f;
+    }
+
+    /* ✅ Sección Sobre Nosotros (tu bloque) */
+    section#sobre .faq {
+      display: grid;
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+
+    section#sobre details {
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    section#sobre summary {
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      padding: 14px 14px;
+      font-weight: bold;
+      color: #111;
+    }
+    section#sobre summary::-webkit-details-marker { display: none; }
+
+    section#sobre details p {
+      margin: 0;
+      padding: 0 14px 14px 14px;
+      color: #333;
+      line-height: 1.5;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 12px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      color: #666;
+      font-size: 0.9em;
+      padding-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="rogerd.jpeg" alt="Logo Roger Deportes GT">
+    Roger Deportes GT
+  </header>
+
+  <!-- ✅ Transmisiones -->
+  <div class="container">
+    <h2>Transmisiones en vivo</h2>
+    <p class="muted" style="text-align:center">
+      Entrá a cada partido y elegí uno de los 3 links disponibles.
+    </p>
+    <div class="transmisiones" id="transmisiones"></div>
+  </div>
+
+  <!-- ✅ Sobre nosotros (integrado) -->
+  <section id="sobre" aria-label="Información de la tienda">
+    <div class="container">
+      <h2>Sobre nosotros</h2>
+      <p class="muted">
+        Somos una plataforma digital para la administración del medio ambiente a nivel comunitario, cuyo objetivo es sanear, recuperar y dar nueva vida a las áreas perjudicadas por la industrialización descontrolada. Este esquema fusiona el cuidado del entorno con un componente social y tecnológico, impulsando la creación de trabajos ecológicos y la colaboración de los habitantes de la zona.
+      </p>
+
+      <div class="faq">
+        <details>
+          <summary>Nuestra Misión</summary>
+          <p>Recuperar y reverdecer las áreas degradadas por empresas o servicios que afectan el medio ambiente, devolviendo equilibrio ecológico y bienestar social.</p>
+        </details>
+
+        <details>
+          <summary>Nuestra Visión</summary>
+          <p>Convertirnos en un referente internacional en restauración ambiental digitalizada, conectando a gobiernos, empresas y ciudadanos en un mismo propósito verde.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    © 2025 Roger Deportes GT no es dueño del contenido y no monetiza, solamente filtramos links del internet y los compartimos para los amantes del deporte.
+  </div>
+
+  <script>
+    // 🔹 Lista de transmisiones en orden fijo
+    const archivos = [
+      'TR1.html', 'TR2.html', 'TR3.html', 'TR4.html', 'TR5.html',
+      'TR6.html', 'TR7.html', 'TR8.html', 'TR9.html', 'TR10.html',
+      'TR11.html', 'TR12.html', 'TR13.html', 'TR14.html', 'TR15.html',
+      'TR16.html', 'TR17.html', 'TR18.html', 'TR19.html', 'TR20.html'
+    ];
+
+    const contenedor = document.getElementById('transmisiones');
+
+    function crearAcordeon(titulo, links, archivo) {
+      const details = document.createElement('details');
+
+      const summary = document.createElement('summary');
+      summary.textContent = titulo || archivo;
+      details.appendChild(summary);
+
+      const panel = document.createElement('div');
+      panel.className = 'panel';
+
+      if (!links || links.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'muted';
+        p.textContent = 'No se encontraron links en este archivo.';
+        panel.appendChild(p);
+      } else {
+        links.slice(0, 3).forEach((l, idx) => {
+          const a = document.createElement('a');
+          a.href = l.href;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = l.text || `Opción ${idx + 1}`;
+          panel.appendChild(a);
+        });
+      }
+
+      details.appendChild(panel);
+      return details;
+    }
+
+    // 🔹 Carga en orden 1→20, leyendo título + 3 links desde cada TRx.html
+    async function cargarTransmisiones() {
+      for (let archivo of archivos) {
+        const url = archivo + '?v=' + new Date().getTime();
+
+        try {
+          const response = await fetch(url);
+          const data = await response.text();
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data, 'text/html');
+
+          // ✅ Título: busca el h2 dentro de .container (igual que tu lógica actual)
+          const h2 = doc.querySelector('.container h2') || doc.querySelector('h2');
+          const titulo = h2 ? h2.innerText.trim() : archivo;
+
+          // ✅ Links: preferimos .links a (plantilla recomendada). Si no existe, tomamos los primeros 3 <a> del .container
+          let anchors = Array.from(doc.querySelectorAll('.links a'));
+          if (anchors.length === 0) {
+            const scope = doc.querySelector('.container') || doc.body;
+            anchors = Array.from(scope.querySelectorAll('a'));
+          }
+
+          const links = anchors
+            .filter(a => (a.getAttribute('href') || '').trim() !== '')
+            .slice(0, 3)
+            .map(a => ({
+              href: a.getAttribute('href'),
+              text: (a.textContent || '').trim()
+            }));
+
+          contenedor.appendChild(crearAcordeon(titulo, links, archivo));
+        } catch (err) {
+          console.error(`Error cargando ${archivo}:`, err);
+          contenedor.appendChild(crearAcordeon(`Error con ${archivo}`, [], archivo));
+        }
+      }
+    }
+
+    cargarTransmisiones();
+  </script>
+
+</body>
+</html>
