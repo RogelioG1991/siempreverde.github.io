@@ -144,6 +144,36 @@
     .transmisiones details[data-color="rojo"]   { --sum-bg:#fdecec; --panel-bg:#fff7f7; }
     .transmisiones details[data-color="morado"] { --sum-bg:#f2eaff; --panel-bg:#faf6ff; }
 
+    /* =========================
+       ⚽ ICONO BALÓN EN SUMMARY
+       ========================= */
+
+    .transmisiones summary .sum-left{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0; /* evita overflow raro en móviles */
+    }
+
+    .transmisiones summary .sum-icon{
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(11, 61, 145, 0.08);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .transmisiones summary .sum-title{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
   </style>
 </head>
 <body>
@@ -198,7 +228,23 @@
       details.dataset.color = normalizarColor(color);
 
       const summary = document.createElement('summary');
-      summary.textContent = titulo || archivo;
+
+      // ✅ Lado izquierdo: balón + título (sin afectar el acordeón)
+      const sumLeft = document.createElement('span');
+      sumLeft.className = 'sum-left';
+
+      const icon = document.createElement('span');
+      icon.className = 'sum-icon';
+      icon.textContent = '⚽';
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'sum-title';
+      titleSpan.textContent = titulo || archivo;
+
+      sumLeft.appendChild(icon);
+      sumLeft.appendChild(titleSpan);
+      summary.appendChild(sumLeft);
+
       details.appendChild(summary);
 
       const panel = document.createElement('div');
