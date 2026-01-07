@@ -173,7 +173,6 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
   </style>
 </head>
 <body>
@@ -221,7 +220,7 @@
       return mapa[v] || v || 'default';
     }
 
-    function crearAcordeon(titulo, links, archivo, color) {
+    function crearAcordeon(titulo, links, archivo, color, mostrarBalon = true) {
       const details = document.createElement('details');
 
       // 👇 esto activa el CSS: details[data-color="verde"] { ... }
@@ -229,19 +228,21 @@
 
       const summary = document.createElement('summary');
 
-      // ✅ Lado izquierdo: balón + título (sin afectar el acordeón)
+      // ✅ Lado izquierdo: (balón opcional) + título
       const sumLeft = document.createElement('span');
       sumLeft.className = 'sum-left';
 
-      const icon = document.createElement('span');
-      icon.className = 'sum-icon';
-      icon.textContent = '⚽';
+      if (mostrarBalon) {
+        const icon = document.createElement('span');
+        icon.className = 'sum-icon';
+        icon.textContent = '⚽';
+        sumLeft.appendChild(icon);
+      }
 
       const titleSpan = document.createElement('span');
       titleSpan.className = 'sum-title';
       titleSpan.textContent = titulo || archivo;
 
-      sumLeft.appendChild(icon);
       sumLeft.appendChild(titleSpan);
       summary.appendChild(sumLeft);
 
@@ -272,7 +273,8 @@
 
     // 🔹 Carga en orden 1→20, leyendo título + 3 links + color desde cada TRx.html
     async function cargarTransmisiones() {
-      for (let archivo of archivos) {
+      for (let i = 0; i < archivos.length; i++) {
+        const archivo = archivos[i];
         const url = archivo + '?v=' + new Date().getTime();
 
         try {
@@ -301,10 +303,11 @@
               text: (a.textContent || '').trim()
             }));
 
-          contenedor.appendChild(crearAcordeon(titulo, links, archivo, color));
+          // ✅ Solo el primero (i === 0) SIN balón
+          contenedor.appendChild(crearAcordeon(titulo, links, archivo, color, i !== 0));
         } catch (err) {
           console.error(`Error cargando ${archivo}:`, err);
-          contenedor.appendChild(crearAcordeon(`Error con ${archivo}`, [], archivo, 'gris'));
+          contenedor.appendChild(crearAcordeon(`Error con ${archivo}`, [], archivo, 'gris', i !== 0));
         }
       }
     }
