@@ -4,14 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Roger Deportes GT</title>
-
   <!-- 🔹 Icono de la pestaña -->
   <link rel="icon" type="image/jpeg" href="rogerd.jpeg">
-
   <!-- 🎨 Color del acordeón en el INDEX (la persona solo cambia esto):
        azul | gris | verde | rojo | morado -->
   <meta name="acordeon-color" content="verde">
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,7 +17,6 @@
       padding: 0;
       text-align: center;
     }
-
     header {
       background-color: #0b3d91;
       color: white;
@@ -28,7 +24,6 @@
       font-size: 2em;
       font-weight: bold;
     }
-
     /* 🔹 Contenido del encabezado con logo y enlace de retorno */
     .header-content {
       display: flex;
@@ -38,7 +33,6 @@
       margin: 0 auto;
       gap: 12px;
     }
-
     header img {
       width: 60px;
       height: 60px;
@@ -48,14 +42,12 @@
       margin-right: 15px;
       flex: 0 0 auto;
     }
-
     .titulo {
       display: flex;
       align-items: center;
       font-size: 1em;
       white-space: nowrap;
     }
-
     .volver-inicio {
       font-size: 0.6em;
       color: white;
@@ -63,12 +55,10 @@
       transition: color 0.3s, text-decoration 0.3s;
       white-space: nowrap;
     }
-
     .volver-inicio:hover {
       text-decoration: underline;
       color: #cdd8f5;
     }
-
     /* 🔹 Caja principal */
     .container {
       margin: 40px auto;
@@ -79,12 +69,10 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       text-align: left;
     }
-
     .container h2 {
       text-align: center;
       margin-top: 0;
     }
-
     .muted {
       color: #666;
       font-size: 0.95em;
@@ -92,14 +80,12 @@
       margin: 0.25rem 0 1rem 0;
       text-align: center;
     }
-
     /* ✅ Bloque de 3 links (lo que el index debe leer) */
     .links {
       display: grid;
       gap: 10px;
       margin: 12px 0 18px 0;
     }
-
     .links a {
       display: block;
       padding: 12px 14px;
@@ -113,20 +99,17 @@
       text-align: center;
       word-break: break-word;
     }
-
     .links a:hover {
       background: #eef3ff;
       color: #062a6f;
       transform: translateY(-1px);
     }
-
     iframe {
       width: 100%;
       height: 450px;
       border: none;
       border-radius: 10px;
     }
-
     .acciones {
       margin-top: 10px;
       display: flex;
@@ -134,7 +117,6 @@
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .btn {
       cursor: pointer;
       border: 1px solid rgba(11, 61, 145, 0.18);
@@ -145,7 +127,6 @@
       font-weight: bold;
     }
     .btn:hover { background: #f7f9ff; }
-
     .footer {
       margin-top: 40px;
       color: #666;
@@ -156,7 +137,6 @@
   </style>
 </head>
 <body>
-
   <!-- 🔹 Encabezado con logo y botón de regreso -->
   <header>
     <div class="header-content">
@@ -167,48 +147,42 @@
       <a href="index.html" class="volver-inicio">Volver a inicio</a>
     </div>
   </header>
-
   <!-- 🔹 Contenedor principal -->
   <div class="container">
     <!-- ✅ Este h2 lo toma tu index como título -->
-    <h2>2 11:30 Saudi Pro League Damac - Al-Ittihad FC </h2>
+    <h2>2 # Laliga 2 : Cadix CF 13-30 Gijon </h2>
+    <h2>2 # Laliga 2 13:30 Cadix CF-Gijon </h2>
     <p class="muted">Elegí una opción. Si una no carga aquí, abrila en otra pestaña o probá otra.</p>
 
     <!-- ✅ Estos 3 links los leerá el index (solo .links a) -->
     <div class="links">
-      <a href="https://siempreverde.site/acortador.html?get=https://futbollibrelibre.com/canales.php?stream=foxdeportes">Opción: 1  FOX DEPORTES </a>
-      <a href="https://siempreverde.site/acortador.html?get=https://kakarotfoot.ru/yu/3/61">Opción: 2 LIGA DE CAMPEONES</a>
-      <a href="https://siempreverde.site/acortador.html?get=https://glisco.link/ch?id=87">Opción: 3 EVENTOS</a>
+      <a href="https://siempreverde.site/acortador.html?get=https://futbollibrelibre.com/canales.php?stream=hypermotion1">Opción: 1 HIPERMOTION</a>
+      <a href="https://siempreverde.site/acortador.html?get=https://kakarotfoot.ru/yu/3/53">Opción: 2 EVENTOS</a>
+      <a href="https://siempreverde.site/acortador.html?get=https%3A%2F%2Fvoodc.com%2Fembed%2F85818c98a58fa084847a85989c909885897f.html">Opción: 3 EVENTOS</a>
     </div>
-
     <!-- ✅ Arranca automáticamente con el Link 1 (lo setea el JS) -->
     <iframe id="player"
       src=""
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen>
     </iframe>
-
     <div class="acciones">
       <button class="btn" id="abrirNueva">Abrir lo actual en nueva pestaña</button>
       <button class="btn" id="recargar">Recargar</button>
     </div>
   </div>
-
   <!-- 🔹 Pie de página -->
   <div class="footer">
     © 2025 Roger Deportes GT no es dueño del contenido y no monetiza, solamente filtramos links del internet y los compartimos para los amantes del deporte.
   </div>
-
   <script>
     const iframe = document.getElementById('player');
     const links = document.querySelectorAll('.links a');
-
     // ✅ Setear por defecto el Link 1 al cargar (así no duplicás links en el iframe)
     const first = document.querySelector('.links a');
     if (first && first.getAttribute('href')) {
       iframe.src = first.getAttribute('href');
     }
-
     // ✅ Click en opción = cargar en el iframe
     links.forEach(a => {
       a.addEventListener('click', (e) => {
@@ -220,33 +194,15 @@
         }
       });
     });
-
     // ✅ Abrir lo que esté en el iframe
     document.getElementById('abrirNueva').addEventListener('click', () => {
       if (iframe.src) window.open(iframe.src, '_blank', 'noopener');
     });
-
     // ✅ Recargar el iframe
     document.getElementById('recargar').addEventListener('click', () => {
       const current = iframe.src;
       iframe.src = current;
     });
   </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
