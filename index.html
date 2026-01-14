@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roger Deportes GT</title>
+
+  <!-- 🔹 Icono de la pestaña -->
+  <link rel="icon" type="image/jpeg" href="rogerd.jpeg">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #0b3d91;
+      color: white;
+      padding: 20px 0;
+      font-size: 2em;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .container {
+      margin: 40px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .container h2 {
+      margin: 0 0 10px 0;
+      text-align: center;
+    }
+
+    .muted {
+      color: #666;
+      margin: 0.25rem 0 0;
+      line-height: 1.5;
+    }
+
+    /* ✅ Acordeones de transmisiones */
+    .transmisiones {
+      display: grid;
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+
+    .transmisiones details {
+      border: 1px solid rgba(11, 61, 145, 0.18);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .transmisiones summary {
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      padding: 14px 14px;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #0b3d91;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--sum-bg, #ffffff);
+      border-radius: 10px;
+    }
+
+    .transmisiones summary::-webkit-details-marker { display: none; }
+
+    .transmisiones summary::after {
+      content: "▾";
+      font-size: 1.1em;
+      color: rgba(11, 61, 145, 0.75);
+      transition: transform .2s ease;
+    }
+    .transmisiones details[open] summary::after { transform: rotate(180deg); }
+
+    .transmisiones details[open] summary {
+      border-radius: 10px 10px 0 0;
+    }
+
+    .transmisiones .panel {
+      padding: 0 14px 14px 14px;
+      border-top: 1px solid rgba(11, 61, 145, 0.10);
+      background: var(--panel-bg, #ffffff);
+    }
+
+    .transmisiones .panel a {
+      display: block;
+      font-size: 1.05em;
+      color: #0b3d91;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: color 0.3s;
+      word-break: break-word;
+    }
+
+    .transmisiones .panel a:hover {
+      color: #062a6f;
+    }
+
+    .footer {
+      margin-top: 40px;
+      color: #666;
+      font-size: 0.9em;
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    /* =========================
+       🎨 COLORES POR NOMBRE
+       ========================= */
+    .transmisiones details[data-color="azul"]   { --sum-bg:#eaf2ff; --panel-bg:#f6f9ff; }
+    .transmisiones details[data-color="gris"]   { --sum-bg:#f2f3f5; --panel-bg:#fafafa; }
+    .transmisiones details[data-color="verde"]  { --sum-bg:#e9f7ef; --panel-bg:#f4fbf7; }
+    .transmisiones details[data-color="rojo"]   { --sum-bg:#fdecec; --panel-bg:#fff7f7; }
+    .transmisiones details[data-color="morado"] { --sum-bg:#f2eaff; --panel-bg:#faf6ff; }
+
+    /* =========================
+       ⚽ ICONO BALÓN EN SUMMARY
+       ========================= */
+    .transmisiones summary .sum-left{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .transmisiones summary .sum-icon{
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(11, 61, 145, 0.08);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .transmisiones summary .sum-title{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       🖼️ SPLASH / INTRO OVERLAY
+       ========================= */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,0.88);
+      transition: opacity .45s ease, visibility .45s ease;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #splash img {
+      max-width: min(520px, 86vw);
+      max-height: 70vh;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+      transform: scale(1);
+      transition: transform .45s ease;
+    }
+
+    #splash.oculto {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #splash.oculto img {
+      transform: scale(0.98);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #splash, #splash img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🖼️ Splash de entrada -->
+  <div id="splash" aria-hidden="true">
+    <img src="splash.png" alt="Roger Deportes GT">
+  </div>
+
+  <header>
+    <img src="rogerd.jpeg" alt="Logo Roger Deportes GT">
+    Roger Deportes GT
+  </header>
+
+  <!-- ✅ Transmisiones -->
+  <div class="container">
+    <h2>Transmisiones en vivo</h2>
+    <p class="muted" style="text-align:center">
+      Entrá a cada partido y elegí uno de los 3 links disponibles.
+    </p>
+    <div class="transmisiones" id="transmisiones"></div>
+  </div>
+
+  <div class="footer">
+    © 2026 Roger Deportes GT no es dueño del contenido y no monetiza, solamente filtramos links del internet y los compartimos para los amantes del deporte.
+  </div>
+
+  <script>
+    // =========================
+    // 🖼️ Splash: se oculta CUANDO YA TERMINÓ de cargar transmisiones
+    // =========================
+    (function splashController() {
+      const splash = document.getElementById('splash');
+      if (!splash) return;
+
+      function ocultarSplash() {
+        // evita doble ejecución
+        if (!document.body.contains(splash)) return;
+
+        splash.classList.add('oculto');
+
+        const remover = () => {
+          splash.removeEventListener('transitionend', remover);
+          if (document.body.contains(splash)) splash.remove();
+        };
+        splash.addEventListener('transitionend', remover);
+
+        // Fallback
+        setTimeout(() => {
+          if (document.body.contains(splash)) splash.remove();
+        }, 1200);
+      }
+
+      // lo exponemos para usarlo cuando termine cargarTransmisiones()
+      window.__ocultarSplash = ocultarSplash;
+
+      // Bonus: click para saltarlo manualmente
+      splash.addEventListener('click', ocultarSplash);
+
+      // Failsafe: si algo se queda colgado, no dejamos al usuario atrapado
+      setTimeout(ocultarSplash, 15000); // 15s
+    })();
+
+    // 🔹 Lista de transmisiones en orden fijo
+    const archivos = [
+      'TR1.html', 'TR2.html', 'TR3.html', 'TR4.html', 'TR5.html',
+      'TR6.html', 'TR7.html', 'TR8.html', 'TR9.html', 'TR10.html',
+      'TR11.html', 'TR12.html', 'TR13.html', 'TR14.html', 'TR15.html',
+      'TR16.html', 'TR17.html', 'TR18.html', 'TR19.html', 'TR20.html'
+    ];
+
+    const contenedor = document.getElementById('transmisiones');
+
+    // ✅ Normaliza alias (por si alguien escribe "green", "blue", etc.)
+    function normalizarColor(valor) {
+      const v = (valor || '').trim().toLowerCase();
+      const mapa = {
+        blue: 'azul',
+        gray: 'gris',
+        grey: 'gris',
+        green: 'verde',
+        red: 'rojo',
+        purple: 'morado'
+      };
+      return mapa[v] || v || 'default';
+    }
+
+    function crearAcordeon(titulo, links, archivo, color, mostrarBalon = true) {
+      const details = document.createElement('details');
+      details.dataset.color = normalizarColor(color);
+
+      const summary = document.createElement('summary');
+
+      const sumLeft = document.createElement('span');
+      sumLeft.className = 'sum-left';
+
+      if (mostrarBalon) {
+        const icon = document.createElement('span');
+        icon.className = 'sum-icon';
+        icon.textContent = '⚽';
+        sumLeft.appendChild(icon);
+      }
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'sum-title';
+      titleSpan.textContent = titulo || archivo;
+
+      sumLeft.appendChild(titleSpan);
+      summary.appendChild(sumLeft);
+
+      details.appendChild(summary);
+
+      const panel = document.createElement('div');
+      panel.className = 'panel';
+
+      if (!links || links.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'muted';
+        p.textContent = 'No se encontraron links en este archivo.';
+        panel.appendChild(p);
+      } else {
+        links.slice(0, 3).forEach((l, idx) => {
+          const a = document.createElement('a');
+          a.href = l.href;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = l.text || `Opción ${idx + 1}`;
+          panel.appendChild(a);
+        });
+      }
+
+      details.appendChild(panel);
+      return details;
+    }
+
+    // 🔹 Carga en orden 1→20, leyendo título + 3 links + color desde cada TRx.html
+    async function cargarTransmisiones() {
+      for (let i = 0; i < archivos.length; i++) {
+        const archivo = archivos[i];
+        const url = archivo + '?v=' + new Date().getTime();
+
+        try {
+          const response = await fetch(url);
+          const data = await response.text();
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data, 'text/html');
+
+          const h2 = doc.querySelector('.container h2') || doc.querySelector('h2');
+          const titulo = h2 ? h2.innerText.trim() : archivo;
+
+          const metaColor = doc.querySelector('meta[name="acordeon-color"]');
+          const color = metaColor ? metaColor.getAttribute('content') : 'default';
+
+          const anchors = Array.from(doc.querySelectorAll('.links a'));
+
+          const links = anchors
+            .filter(a => (a.getAttribute('href') || '').trim() !== '')
+            .slice(0, 3)
+            .map(a => ({
+              href: a.getAttribute('href'),
+              text: (a.textContent || '').trim()
+            }));
+
+          contenedor.appendChild(crearAcordeon(titulo, links, archivo, color, i !== 0));
+        } catch (err) {
+          console.error(`Error cargando ${archivo}:`, err);
+          contenedor.appendChild(crearAcordeon(`Error con ${archivo}`, [], archivo, 'gris', i !== 0));
+        }
+      }
+
+      // ✅ AQUÍ: ya terminó todo → quitamos splash
+      if (typeof window.__ocultarSplash === 'function') window.__ocultarSplash();
+    }
+
+    // Arranca carga
+    cargarTransmisiones();
+  </script>
+
+</body>
+</html>
