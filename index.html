@@ -77,27 +77,36 @@
       cursor: pointer;
       user-select: none;
       list-style: none;
-      padding: 14px 14px;
+      padding: 14px 46px 14px 14px; /* ✅ dejamos espacio para la flecha */
       font-size: 1.1em;
       font-weight: bold;
       color: #0b3d91;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      align-items: flex-start;      /* ✅ soporta varias líneas */
+      justify-content: flex-start;  /* ✅ flecha ya no “empuja” contenido */
       gap: 12px;
       background: var(--sum-bg, #ffffff);
       border-radius: 10px;
+      position: relative;           /* ✅ para posicionar la flecha */
     }
 
     .transmisiones summary::-webkit-details-marker { display: none; }
 
+    /* ✅ Flecha fija a la derecha, sin cortar texto */
     .transmisiones summary::after {
       content: "▾";
       font-size: 1.1em;
       color: rgba(11, 61, 145, 0.75);
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
       transition: transform .2s ease;
+      pointer-events: none;
     }
-    .transmisiones details[open] summary::after { transform: rotate(180deg); }
+    .transmisiones details[open] summary::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
 
     .transmisiones details[open] summary {
       border-radius: 10px 10px 0 0;
@@ -145,9 +154,10 @@
        ========================= */
     .transmisiones summary .sum-left{
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* ✅ para que el texto multi-línea quede “arriba” */
       gap: 10px;
       min-width: 0;
+      flex: 1 1 auto;          /* ✅ permite que el título use el ancho disponible */
     }
 
     .transmisiones summary .sum-icon{
@@ -161,12 +171,18 @@
       background: rgba(11, 61, 145, 0.08);
       font-size: 18px;
       line-height: 1;
+      margin-top: 1px;
     }
 
+    /* ✅ AQUÍ está la magia: sin ellipsis, con salto de línea y sin desbordes */
     .transmisiones summary .sum-title{
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      white-space: normal;       /* ✅ permite saltos de línea */
+      overflow: visible;         /* ✅ no recorta */
+      text-overflow: clip;       /* ✅ no pone "..." */
+      line-height: 1.25;
+      overflow-wrap: anywhere;   /* ✅ si viene una palabra larguísima, no rompe layout */
+      word-break: normal;
+      min-width: 0;
     }
 
     /* =========================
@@ -204,6 +220,40 @@
 
     @media (prefers-reduced-motion: reduce) {
       #splash, #splash img { transition: none; }
+    }
+
+    /* ✅ Ajustes extra para celular: más compacto, mismo comportamiento “sin cortes” */
+    @media (max-width: 520px) {
+      header {
+        font-size: 1.6em;
+        padding: 16px 12px;
+      }
+
+      header img {
+        width: 52px;
+        height: 52px;
+      }
+
+      .container {
+        margin: 18px 12px;
+        padding: 16px;
+      }
+
+      .transmisiones summary {
+        font-size: 1.0em;
+        padding: 12px 46px 12px 12px;
+      }
+
+      .transmisiones summary .sum-icon{
+        width: 24px;
+        height: 24px;
+        flex: 0 0 24px;
+        font-size: 16px;
+      }
+
+      .transmisiones .panel a {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
