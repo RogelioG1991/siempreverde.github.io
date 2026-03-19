@@ -39,7 +39,7 @@
   </style>
 </head>
 
-<body 
+<body
   class="min-h-screen flex flex-col items-center justify-center text-center"
   style="
     background-image: url('fondobodalogin.jpg');
@@ -48,7 +48,6 @@
     background-repeat: no-repeat;
   "
 >
-
   <!-- TEXTO SUPERIOR -->
   <div class="boda-text mb-10 leading-tight">
     Bienvenidos a<br>nuestra boda
@@ -129,12 +128,13 @@
         mensaje.textContent = "Validando acceso...";
         mensaje.className = "text-sm mt-3 text-center text-gray-700";
 
-        const resp = await fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ nombre, apellido })
+        const params = new URLSearchParams({
+          nombre,
+          apellido
+        });
+
+        const resp = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`, {
+          method: "GET"
         });
 
         const data = await resp.json();
@@ -162,18 +162,17 @@
       }
     }
 
-    document.getElementById("nombre").addEventListener("keydown", function(e) {
+    document.getElementById("nombre").addEventListener("keydown", function (e) {
       if (e.key === "Enter") {
         document.getElementById("apellido").focus();
       }
     });
 
-    document.getElementById("apellido").addEventListener("keydown", function(e) {
+    document.getElementById("apellido").addEventListener("keydown", function (e) {
       if (e.key === "Enter") {
         redirigir();
       }
     });
   </script>
-
 </body>
 </html>
