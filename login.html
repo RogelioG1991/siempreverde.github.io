@@ -49,21 +49,33 @@
   "
 >
 
-  <!-- 🟣 TEXTO SUPERIOR -->
+  <!-- TEXTO SUPERIOR -->
   <div class="boda-text mb-10 leading-tight">
     Bienvenidos a<br>nuestra boda
   </div>
 
-  <!-- 🟣 TARJETA CENTRAL -->
+  <!-- TARJETA CENTRAL -->
   <div class="card-container bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg w-full max-w-sm backdrop-blur-sm">
-    <h1 class="text-xl font-semibold mb-4 text-center">Ingresa un nombre y un apellido de la persona que recibió la invitación</h1>
+    <h1 class="text-xl font-semibold mb-4 text-center">
+      Ingresa un nombre y un apellido de la persona que recibió la invitación
+    </h1>
 
     <input
-      id="texto"
+      id="nombre"
       type="text"
-      placeholder="Tu nombre aquí"
+      placeholder="Nombre"
       class="w-full p-2 border rounded-xl mb-2 uppercase focus:outline-none focus:ring"
       oninput="this.value = this.value.toUpperCase()"
+      autocomplete="given-name"
+    />
+
+    <input
+      id="apellido"
+      type="text"
+      placeholder="Apellido"
+      class="w-full p-2 border rounded-xl mb-2 uppercase focus:outline-none focus:ring"
+      oninput="this.value = this.value.toUpperCase()"
+      autocomplete="family-name"
     />
 
     <button
@@ -76,48 +88,92 @@
     <p id="mensaje" class="text-sm mt-3 text-center"></p>
   </div>
 
-  <!-- 🟣 TEXTO INFERIOR -->
+  <!-- TEXTO INFERIOR -->
   <div class="boda-text mt-10">
     Jennifer y Rogelio
   </div>
 
- <script>
-  // MR5, MR10, MR15, ... MR400
-  const codigosValidos = Array.from(
-    { length: 400 / 5 },
-    (_, i) => `MR${(i + 1) * 5}`
-  );
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRg6mPHB4nNZ6WX9q4SmmlEJGdYP3inKKYLdOWgcN3nUtksf2mjU1Fb1XQ6yjHRz8XQg/exec";
 
-    function redirigir() {
-      const input = document.getElementById("texto");
-      const mensaje = document.getElementById("mensaje");
-      const texto = input.value.trim().toUpperCase();
-
-      if (!texto) {
-        mensaje.textContent = "Por favor ingresa un nombre.";
-        mensaje.className = "text-sm mt-3 text-center text-red-600";
-        return;
-      }
-
-      if (!codigosValidos.includes(texto)) {
-        mensaje.textContent = "El código no existe. Intenta de nuevo.";
-        mensaje.className = "text-sm mt-3 text-center text-red-600";
-        input.value = "";
-        input.focus();
-        return;
-      }
-
-      const url = `https://www.siempreverde.site/mesas/${texto}`;
-      mensaje.textContent = "Código válido. Redirigiendo...";
-      mensaje.className = "text-sm mt-3 text-center text-green-600";
-
-      setTimeout(() => {
-        window.location.href = url;
-      }, 800);
+    function normalizarTexto(texto) {
+      return texto
+        .trim()
+        .toUpperCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // quita tildes
+        .replace(/\s+/g, " ");           // unifica espacios
     }
+
+    async function redirigir() {
+      const inputNombre = document.getElementById("nombre");
+      const inputApellido = document.getElementById("apellido");
+      const mensaje = document.getElementById("mensaje");
+
+      const nombre = normalizarTexto(inputNombre.value);
+      const apellido = normalizarTexto(inputApellido.value);
+
+      if (!nombre || !apellido) {
+        mensaje.textContent = "Por favor ingresa un nombre y un apellido.";
+        mensaje.className = "text-sm mt-3 text-center text-red-600";
+        return;
+      }
+
+      if (nombre.includes(" ") || apellido.includes(" ")) {
+        mensaje.textContent = "Ingresa solo 1 nombre y 1 apellido.";
+        mensaje.className = "text-sm mt-3 text-center text-red-600";
+        return;
+      }
+
+      try {
+        mensaje.textContent = "Validando acceso...";
+        mensaje.className = "text-sm mt-3 text-center text-gray-700";
+
+        const resp = await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ nombre, apellido })
+        });
+
+        const data = await resp.json();
+
+        if (!data.ok) {
+          mensaje.textContent = data.error || "No autorizado.";
+          mensaje.className = "text-sm mt-3 text-center text-red-600";
+          inputNombre.value = "";
+          inputApellido.value = "";
+          inputNombre.focus();
+          return;
+        }
+
+        mensaje.textContent = "Nombre válido. Redirigiendo...";
+        mensaje.className = "text-sm mt-3 text-center text-green-600";
+
+        setTimeout(() => {
+          window.location.href = data.url;
+        }, 800);
+
+      } catch (error) {
+        console.error("Error al validar:", error);
+        mensaje.textContent = "No fue posible validar el acceso.";
+        mensaje.className = "text-sm mt-3 text-center text-red-600";
+      }
+    }
+
+    document.getElementById("nombre").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        document.getElementById("apellido").focus();
+      }
+    });
+
+    document.getElementById("apellido").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        redirigir();
+      }
+    });
   </script>
 
 </body>
 </html>
-
-
