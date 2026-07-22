@@ -941,11 +941,19 @@ textarea {
   font-weight: 800;
 }
 
-.facebook-float,
-.whatsapp-float {
+.social-floats {
   position: fixed;
   z-index: 30;
+  top: 50%;
   right: 18px;
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+  transform: translateY(-50%);
+}
+
+.facebook-float,
+.whatsapp-float {
   min-height: 54px;
   padding: 8px 16px 8px 8px;
   display: flex;
@@ -957,25 +965,23 @@ textarea {
   font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.01em;
-  transform: translateY(-50%);
+  transform: none;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
 .facebook-float {
-  top: calc(50% - 34px);
   background: #1877f2;
   box-shadow: 0 14px 36px rgba(24, 119, 242, 0.34);
 }
 
 .whatsapp-float {
-  top: calc(50% + 34px);
   background: #25d366;
   box-shadow: 0 14px 36px rgba(37, 211, 102, 0.3);
 }
 
 .facebook-float:hover,
 .whatsapp-float:hover {
-  transform: translate(-4px, -50%);
+  transform: translateX(-4px);
 }
 
 .facebook-float:hover {
@@ -1015,7 +1021,7 @@ textarea {
 
 .whatsapp-mark {
   color: #1fbd59;
-  font-size: 1.45rem;
+  font-size: 0.82rem;
 }
 
 .faq {
@@ -1332,10 +1338,14 @@ textarea {
   .contact-card { width: 100%; padding: 48px 22px; border-radius: 0; }
   .contact-copy h2 { font-size: 2.5rem; }
   .site-footer nav { flex-wrap: wrap; justify-content: center; }
-  .facebook-float,
-  .whatsapp-float {
+  .social-floats {
     top: auto;
     right: 16px;
+    bottom: 18px;
+    transform: none;
+  }
+  .facebook-float,
+  .whatsapp-float {
     width: 56px;
     height: 56px;
     min-height: 0;
@@ -1343,8 +1353,6 @@ textarea {
     justify-content: center;
     transform: none;
   }
-  .facebook-float { bottom: 82px; }
-  .whatsapp-float { bottom: 18px; }
   .facebook-float:hover, .whatsapp-float:hover { transform: translateY(-3px); }
   .facebook-label, .whatsapp-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .facebook-mark, .whatsapp-mark { width: 40px; height: 40px; }
