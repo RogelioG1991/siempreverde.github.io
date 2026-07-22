@@ -5,11 +5,11 @@ document.documentElement.classList.add("js");
  * El resto de la página se actualiza automáticamente.
  */
 const CONFIG = {
-  whatsapp: "",
-  phone: "",
-  email: "",
-  address: "",
-  mapsUrl: "",
+  whatsapp: "4267 5231",
+  phone: "4267 5231",
+  email: "fisiohelen12@gmail.com",
+  address: "16 Calle 14-58, Cdad. de Guatemala 01010",
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=16%20Calle%2014-58%2C%20Ciudad%20de%20Guatemala%2001010",
   whatsappMessage:
     "Hola, quisiera información sobre los servicios del Centro de Especialidades Motoras.",
 };
@@ -71,7 +71,8 @@ function setContact(kind, value, href) {
 }
 
 if (CONFIG.whatsapp) {
-  const cleanNumber = CONFIG.whatsapp.replace(/\D/g, "");
+  const localNumber = CONFIG.whatsapp.replace(/\D/g, "");
+  const cleanNumber = localNumber.length === 8 ? `502${localNumber}` : localNumber;
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(CONFIG.whatsappMessage)}`;
   setContact("whatsapp", CONFIG.whatsapp, whatsappUrl);
 
@@ -80,11 +81,15 @@ if (CONFIG.whatsapp) {
     primaryContact.href = whatsappUrl;
     primaryContact.textContent = "Escribir por WhatsApp";
     primaryContact.target = "_blank";
-    primaryContact.rel = "noreferrer";
+    primaryContact.rel = "noopener noreferrer";
   }
 }
 
-if (CONFIG.phone) setContact("phone", CONFIG.phone, `tel:${CONFIG.phone.replace(/\s/g, "")}`);
+if (CONFIG.phone) {
+  const localPhone = CONFIG.phone.replace(/\D/g, "");
+  const dialNumber = localPhone.length === 8 ? `+502${localPhone}` : `+${localPhone}`;
+  setContact("phone", CONFIG.phone, `tel:${dialNumber}`);
+}
 if (CONFIG.email) setContact("email", CONFIG.email, `mailto:${CONFIG.email}`);
 if (CONFIG.address) setContact("address", CONFIG.address, CONFIG.mapsUrl || "#contacto");
 
